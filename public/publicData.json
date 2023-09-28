@@ -1,0 +1,128 @@
+[
+    {
+        "id": 1,
+        "title":"Sudhu Amar Priya Nei",
+        "track title":"O Preyosi O Preyosi (Tomar Aghate Amar Moron)",
+        "singer":"Moni Kishore",
+        "lyricist":"Najir Mahmud",
+        "composer":"Najir Mahmud",
+        "label":"Sonali"
+    },
+    {
+        "id":"2",
+        "title":"Sudhu Amar Priya Nei",
+        "track title":"Sudhu Amar Priya Nei ( Nodir Ache Dhau)",
+        "singer":"Moni Kishore",
+        "lyricist":"Najir Mahmud",
+        "composer":"Najir Mahmud",
+        "label":"Sonali"
+    },
+    {
+        "id":"3",
+        "title":"Sudhu Amar Priya Nei",
+        "track title":"Ek Dike Tomar Biyer Gari",
+        "singer":"Moni Kishore",
+        "lyricist":"Najir Mahmud",
+        "composer":"Najir Mahmud",
+        "label":"Sonali"
+    },
+    {
+        "id":"4",
+        "title":"Sudhu Amar Priya Nei",
+        "track title":"Amar Du Chokh Chuye",
+        "singer":"Moni Kishore",
+        "lyricist":"Najir Mahmud",
+        "composer":"Najir Mahmud",
+        "label":"Sonali"
+    },
+    {
+        "id":"5",
+        "title":"Sudhu Amar Priya Nei",
+        "track title":"Tomai Niye Sopno Chilo",
+        "singer":"Moni Kishore",
+        "lyricist":"Najir Mahmud",
+        "composer":"Najir Mahmud",
+        "label":"Sonali"
+    },
+    {
+        "id":"6",
+        "title":"Ki Chilo Amar Bhul",
+        "track title":"Amar Du Chokh Chuye",
+        "singer":"Moni Kishore",
+        "lyricist":"Milton Khandaker",
+        "composer":"Milton Khandaker",
+        "label":"Sonali"
+    },
+    {
+        "id":"7",
+        "title":"Ki Chilo Amar Bhul",
+        "track title":"Kichu Manush Ache",
+        "singer":"Moni Kishore",
+        "lyricist":"Milton Khandaker",
+        "composer":"Milton Khandaker",
+        "label":"Sonali"
+    },
+    {
+        "id":"8",
+        "title":"Ki Chilo Amar Bhul",
+        "track title":"Hirey Chuni Panna",
+        "singer":"Moni Kishore",
+        "lyricist":"Milton Khandaker",
+        "composer":"Milton Khandaker",
+        "label":"Sonali"
+    },
+    {
+        "id":"9",
+        "title":"Ki Chilo Amar Bhul",
+        "track title":"Tomake Bhalobeshe",
+        "singer":"Moni Kishore",
+        "lyricist":"Milton Khandaker",
+        "composer":"Milton Khandaker",
+        "label":"Sonali"
+    },
+    {
+        "id":"10",
+        "title":"Ki Chilo Amar Bhul",
+        "track title":"Amar Ontorer Jala",
+        "singer":"Moni Kishore",
+        "lyricist":"Milton Khandaker",
+        "composer":"Milton Khandaker",
+        "label":"Sonali"
+    },
+    {
+        "id":"11",
+        "title":"Ki Chilo Amar Bhul",
+        "track title":"Amar Ontorer Jala",
+        "singer":"Moni Kishore",
+        "lyricist":"Milton Khandaker",
+        "composer":"Milton Khandaker",
+        "label":"Sonali"
+    },
+    {
+        "id":"12",
+        "title":"Ki Chilo Amar Bhul",
+        "track title":"Chole Jabe Amai Chere",
+        "singer":"Moni Kishore",
+        "lyricist":"Milton Khandaker",
+        "composer":"Milton Khandaker",
+        "label":"Sonali"
+    },
+    {
+        "id":"13",
+        "title":"Ki Chilo Amar Bhul",
+        "track title":"Ki Chilo Amar Bhul",
+        "singer":"Moni Kishore",
+        "lyricist":"Milton Khandaker",
+        "composer":"Milton Khandaker",
+        "label":"Sonali"
+    },
+    {
+        "id":"14",
+        "title":"Tumi Sudhu Amari Jonno",
+        "track title":"Tumi Bhalobasho",
+        "singer":"Moni Kishore",
+        "lyricist":"Milton Khandaker",
+        "composer":"Milton Khandaker",
+        "label":"Sonali"
+    }
+]
