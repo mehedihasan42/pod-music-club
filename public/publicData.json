@@ -6,7 +6,12 @@
         "singer":"Moni Kishore",
         "lyricist":"Najir Mahmud",
         "composer":"Najir Mahmud",
-        "label":"Sonali"
+        "label":"Sonali",
+        "Distributor":"vvv",
+        "ISRC":"",
+        "UPC":"",
+        "CopR":"",
+        "pYear":""
     },
     {
         "id":"2",
@@ -15,7 +20,12 @@
         "singer":"Moni Kishore",
         "lyricist":"Najir Mahmud",
         "composer":"Najir Mahmud",
-        "label":"Sonali"
+        "label":"Sonali",
+        "Distributor":"Believe",
+        "ISRC":"",
+        "UPC":"",
+        "CopR":"",
+        "pYear":""
     },
     {
         "id":"3",
@@ -24,7 +34,12 @@
         "singer":"Moni Kishore",
         "lyricist":"Najir Mahmud",
         "composer":"Najir Mahmud",
-        "label":"Sonali"
+        "label":"Sonali",
+        "Distributor":"CD Baby",
+        "ISRC":"",
+        "UPC":"",
+        "CopR":"",
+        "pYear":""
     },
     {
         "id":"4",
@@ -33,7 +48,12 @@
         "singer":"Moni Kishore",
         "lyricist":"Najir Mahmud",
         "composer":"Najir Mahmud",
-        "label":"Sonali"
+        "label":"Sonali",
+        "Distributor":"many",
+        "ISRC":"",
+        "UPC":"",
+        "CopR":"",
+        "pYear":""
     },
     {
         "id":"5",
@@ -42,7 +62,12 @@
         "singer":"Moni Kishore",
         "lyricist":"Najir Mahmud",
         "composer":"Najir Mahmud",
-        "label":"Sonali"
+        "label":"Sonali",
+        "Distributor":"many",
+        "ISRC":"",
+        "UPC":"",
+        "CopR":"",
+        "pYear":""
     },
     {
         "id":"6",
@@ -51,7 +76,12 @@
         "singer":"Moni Kishore",
         "lyricist":"Milton Khandaker",
         "composer":"Milton Khandaker",
-        "label":"Sonali"
+        "label":"Sonali",
+        "Distributor":"many",
+        "ISRC":"",
+        "UPC":"",
+        "CopR":"",
+        "pYear":""
     },
     {
         "id":"7",
@@ -60,7 +90,12 @@
         "singer":"Moni Kishore",
         "lyricist":"Milton Khandaker",
         "composer":"Milton Khandaker",
-        "label":"Sonali"
+        "label":"Sonali",
+        "Distributor":"many",
+        "ISRC":"",
+        "UPC":"",
+        "CopR":"",
+        "pYear":""
     },
     {
         "id":"8",
@@ -69,7 +104,12 @@
         "singer":"Moni Kishore",
         "lyricist":"Milton Khandaker",
         "composer":"Milton Khandaker",
-        "label":"Sonali"
+        "label":"Sonali",
+        "Distributor":"many",
+        "ISRC":"",
+        "UPC":"",
+        "CopR":"",
+        "pYear":""
     },
     {
         "id":"9",
@@ -78,7 +118,12 @@
         "singer":"Moni Kishore",
         "lyricist":"Milton Khandaker",
         "composer":"Milton Khandaker",
-        "label":"Sonali"
+        "label":"Sonali",
+        "Distributor":"nany",
+        "ISRC":"",
+        "UPC":"",
+        "CopR":"",
+        "pYear":""
     },
     {
         "id":"10",
@@ -87,7 +132,12 @@
         "singer":"Moni Kishore",
         "lyricist":"Milton Khandaker",
         "composer":"Milton Khandaker",
-        "label":"Sonali"
+        "label":"Sonali",
+        "Distributor":"many",
+        "ISRC":"",
+        "UPC":"",
+        "CopR":"",
+        "pYear":""
     },
     {
         "id":"11",
@@ -96,7 +146,12 @@
         "singer":"Moni Kishore",
         "lyricist":"Milton Khandaker",
         "composer":"Milton Khandaker",
-        "label":"Sonali"
+        "label":"Sonali",
+        "Distributor":"many",
+        "ISRC":"",
+        "UPC":"",
+        "CopR":"",
+        "pYear":""
     },
     {
         "id":"12",
@@ -105,7 +160,12 @@
         "singer":"Moni Kishore",
         "lyricist":"Milton Khandaker",
         "composer":"Milton Khandaker",
-        "label":"Sonali"
+        "label":"Sonali",
+        "Distributor":"many",
+        "ISRC":"",
+        "UPC":"",
+        "CopR":"",
+        "pYear":""
     },
     {
         "id":"13",
@@ -114,7 +174,12 @@
         "singer":"Moni Kishore",
         "lyricist":"Milton Khandaker",
         "composer":"Milton Khandaker",
-        "label":"Sonali"
+        "label":"Sonali",
+        "Distributor":"many",
+        "ISRC":"",
+        "UPC":"",
+        "CopR":"",
+        "pYear":""
     },
     {
         "id":"14",
@@ -123,6 +188,11 @@
         "singer":"Moni Kishore",
         "lyricist":"Milton Khandaker",
         "composer":"Milton Khandaker",
-        "label":"Sonali"
+        "label":"Sonali",
+        "Distributor":"many",
+        "ISRC":"",
+        "UPC":"",
+        "CopR":"",
+        "pYear":"2019"
     }
 ]
