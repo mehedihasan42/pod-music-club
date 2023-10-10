@@ -1,55 +1,80 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const SignUp = () => {
+  const {createUser} = useContext(AuthContext)
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
-
-  const onSubmit = data => {
-    console.log(data)
+  const onSubmit = (data) => {
+    console.log(data);
+    createUser(data.email,data.password)
+    .then(result=>{
+      const loggedUser = result.user;
+      console.log(loggedUser)
+      navigate("/")
+    })
   };
-   
-  // const handleSubmit = event =>{
-  //    event.preventDefault()
-  //    const form = event.target;
-  //    const email = form.email.value;
-  //    const password = form.password.value;
-  //    console.log(email,password)
-
-  // }
   
-    return (
-     <>
+  return (
+    <>
       <div className="hero min-h-screen bg-base-200">
-  <div className="hero-content flex-col">
-    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-      <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-        <h2 className='font-bold text-2xl'>Sign Up</h2>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Email</span>
-          </label>
-          <input type="email" {...register("email",{ required: true })} placeholder="email" className="input input-bordered"/>
-          {errors.email && <span className='text-red-500'>This field is required</span>}
+        <div className="hero-content flex-col">
+          <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+              <h2 className="font-bold text-2xl">Sign Up</h2>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Email</span>
+                </label>
+                <input
+                  type="email"
+                  {...register("email", { required: true })}
+                  placeholder="email"
+                  className="input input-bordered"
+                />
+                {errors.email && (
+                  <span className="text-red-500">This field is required</span>
+                )}
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Password</span>
+                </label>
+                <input
+                  type="password"
+                  {...register("password", { required: true, minLength: 6 })}
+                  placeholder="password"
+                  className="input input-bordered"
+                />
+                {errors.password?.type === "required" && (
+                  <span className="text-red-500">Password is required</span>
+                )}
+                {errors.password?.type === "minLength" && (
+                  <span className="text-red-500">
+                    Password must be at least 6 characters long
+                  </span>
+                )}
+              </div>
+              <div className="form-control mt-6">
+                <button type="submit" className="btn btn-neutral">
+                  Sign Up
+                </button>
+              </div>
+            </form>
+           <span>Already have an account? Go to  <Link to="/signIn" className="text-blue-500 underline">Log In</Link></span>
+          </div>
         </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Password</span>
-          </label>
-          <input type="password" {...register("password",{ required: true })} placeholder="password" className="input input-bordered" />
-          {errors.password && <span className='text-red-500'>This field is required</span>}
-        </div>
-        <div className="form-control mt-6">
-          <button type='submit' className="btn btn-neutral">Sign Up</button>
-        </div>
-      </form>
-      <Link to="/signIn">Log In</Link>
-    </div>
-  </div>
-</div>
-     </>
-    );
+      </div>
+    </>
+  );
 };
 
 export default SignUp;

@@ -4,6 +4,8 @@ import {
 import Home from "../Home/Home/Home";
 import SignUp from "../Authtication/SignUp/SignUp";
 import SignIn from "../Authtication/SignIn/SignIn";
+import Secret from "../Secret/Secret";
+import PrivateRouter from "./PrivateRouter";
 
   export const router = createBrowserRouter([
     {
@@ -17,5 +19,9 @@ import SignIn from "../Authtication/SignIn/SignIn";
     {
       path:"/signIn",
       element:<SignIn/>
+    },
+    {
+      path:"/secret",
+      element:<PrivateRouter><Secret/></PrivateRouter>
     }
   ]);

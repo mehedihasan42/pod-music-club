@@ -1,6 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../Provider/AuthProvider';
+import Swal from 'sweetalert2';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Card = () => {
+
+    const {user} = useContext(AuthContext)
+    const navigate = useNavigate()
+    const location = useLocation()
+
     const [infos, setInfos] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [singerQuery, setSingerQuery] = useState('');
@@ -24,8 +32,9 @@ const Card = () => {
     const [pyearList, setPyearList] = useState([]); 
     const [searchResults, setSearchResults] = useState([]);
 
+    
     useEffect(() => {
-        fetch("publicData.json")
+        fetch("https://pod-music-server-side-j63axr6rr-mehedihasan42.vercel.app/music")
             .then(res => res.json())
             .then(data => {
                 setInfos(data);
@@ -33,6 +42,8 @@ const Card = () => {
             });
     }, []);
 
+
+    /*handle Search*/ 
     const handleSearch = () => {
         const searchQueries = {
             title: searchList.map(s => s.toLowerCase()), 
@@ -46,6 +57,8 @@ const Card = () => {
             pyear: pyearList.map(s => s.toFixed()),
         };
 
+
+        /*------filter-----------*/ 
         const filteredData = infos.filter(info => {
             return (
                 // searchQueries.title.every(term => info.title.toLowerCase().includes(term)) &&
@@ -57,12 +70,13 @@ const Card = () => {
                 (searchQueries.distributor.length === 0 || searchQueries.distributor.some(distributor => info.Distributor.toLowerCase().includes(distributor)))&&
                 (searchQueries.isrc.length === 0 || searchQueries.isrc.some(isrc => info.isrc.toLowerCase().includes(isrc)))&&
                 (searchQueries.copr.length === 0 || searchQueries.copr.some(copr => info.copr.toLowerCase().includes(copr)))&&
-                (searchQueries.pyear.length === 0 || searchQueries.pyear.some(pyear => info.pyear.toFixed().includes(pyear)))
+                (searchQueries.pyear.length === 0 || searchQueries.pyear.some(pyear => info.pyear.parseInt().includes(pyear)))
             );
         });
 
         setSearchResults(filteredData);
     };
+
 
     // Function to add singer name to the list when Enter or Space is pressed
     // -----------handle add function------------
@@ -127,6 +141,7 @@ const Card = () => {
         }
     };
 
+
     // Function to remove a singer name from the list
     // ----------handle remove function------------
     const handleRemoveTitle = (index) => {
@@ -179,6 +194,51 @@ const Card = () => {
         updatedPyearList.splice(index, 1);
         setPyearList( updatedPyearList);
     };
+
+    /*----handleSaveItem----*/
+    const handleSaveItem = item =>{
+        console.log(item.title)
+        console.log(user?.email)
+        if(user && user.email){
+            const data = {title:item.title, composer:item.composer, label:item.label, lyricist:item.lyricist, singer:item.singer,
+                email:user?.email}
+            fetch('https://pod-music-server-side-j63axr6rr-mehedihasan42.vercel.app/saved',{
+                method:"POST",
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                  }
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                if(data.insertedId){
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Save item successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
+                }
+            })
+        }
+        else{
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Log in!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/signIn', {state:{from:location}})
+                }
+              })
+        }
+    }
+
 
     return (
         <>
@@ -462,6 +522,9 @@ const Card = () => {
                                 <td>{info.UPC}</td>
                                 <td>{info.CopR}</td>
                                 <td>{info.pYear}</td>
+                                <td><button
+                                onClick={()=> handleSaveItem(info)}
+                                 className="btn btn-neutral btn-sm">Save</button></td>
                             </tr>
                         ))}
                     </tbody>
