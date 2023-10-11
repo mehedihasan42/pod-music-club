@@ -70,7 +70,7 @@ const Card = () => {
                 (searchQueries.distributor.length === 0 || searchQueries.distributor.some(distributor => info.Distributor.toLowerCase().includes(distributor)))&&
                 (searchQueries.isrc.length === 0 || searchQueries.isrc.some(isrc => info.isrc.toLowerCase().includes(isrc)))&&
                 (searchQueries.copr.length === 0 || searchQueries.copr.some(copr => info.copr.toLowerCase().includes(copr)))&&
-                (searchQueries.pyear.length === 0 || searchQueries.pyear.some(pyear => info.pyear.parseInt().includes(pyear)))
+                (searchQueries.pyear.length === 0 || searchQueries.pyear.some(pyear => info.pyear.toLowerCase().includes(pyear)))
             );
         });
 
