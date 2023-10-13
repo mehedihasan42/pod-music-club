@@ -53,9 +53,6 @@ const SignIn = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
               <h2 className="font-bold text-2xl">Log In</h2>
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
                 <input
                   type="email"
                   {...register("email", { required: true })}
@@ -67,9 +64,6 @@ const SignIn = () => {
                 )}
               </div>
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Password</span>
-                </label>
                 <input
                   type="password"
                   {...register("password", { required: true })}
@@ -80,14 +74,14 @@ const SignIn = () => {
                   <span className="text-red-500">Password is required</span>
                 )}
               </div>
-              <div className="form-control mt-6">
+              <div className="form-control">
                 <button type="submit" className="btn btn-neutral">
                   Log in
                 </button>
               </div>
             </form>
-            <GoogleSignIn/>
           <span>New User? Go to <Link to="/signup" className="text-blue-500 underline">Sign Up</Link></span>
+            <GoogleSignIn/>
           </div>
         </div>
       </div>

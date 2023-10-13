@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
+import GoogleSignIn from "../GoogleSignIn/GoogleSignIn";
 
 const SignUp = () => {
   const {createUser} = useContext(AuthContext)
@@ -44,9 +45,6 @@ const SignUp = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
               <h2 className="font-bold text-2xl">Sign Up</h2>
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
                 <input
                   type="email"
                   {...register("email", { required: true })}
@@ -58,9 +56,6 @@ const SignUp = () => {
                 )}
               </div>
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Password</span>
-                </label>
                 <input
                   type="password"
                   {...register("password", { required: true, minLength: 6 })}
@@ -76,13 +71,14 @@ const SignUp = () => {
                   </span>
                 )}
               </div>
-              <div className="form-control mt-6">
+              <div className="form-control">
                 <button type="submit" className="btn btn-neutral">
                   Sign Up
                 </button>
               </div>
             </form>
            <span>Already have an account? Go to  <Link to="/signIn" className="text-blue-500 underline">Log In</Link></span>
+           <GoogleSignIn/>
           </div>
         </div>
       </div>
