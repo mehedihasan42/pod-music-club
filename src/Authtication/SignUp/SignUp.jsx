@@ -17,9 +17,22 @@ const SignUp = () => {
     console.log(data);
     createUser(data.email,data.password)
     .then(result=>{
-      const loggedUser = result.user;
-      console.log(loggedUser)
-      navigate("/")
+      const infos = {email:data.email}
+      fetch('http://localhost:5000/users',{
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(infos)
+      })
+      .then(res=>res.json())
+      .then(data=>{
+        if(data.insertedId){
+          const loggedUser = result.user;
+          console.log(loggedUser)
+          navigate("/")
+        }
+      })
     })
   };
   

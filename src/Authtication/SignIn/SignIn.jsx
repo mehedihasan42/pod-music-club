@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import GoogleSignIn from "../GoogleSignIn/GoogleSignIn";
 
 const SignIn = () => {
   const {
@@ -85,6 +86,7 @@ const SignIn = () => {
                 </button>
               </div>
             </form>
+            <GoogleSignIn/>
           <span>New User? Go to <Link to="/signup" className="text-blue-500 underline">Sign Up</Link></span>
           </div>
         </div>
