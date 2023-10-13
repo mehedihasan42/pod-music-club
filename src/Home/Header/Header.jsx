@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Provider/AuthProvider';
+import useCart from '../../useHooks/useCart';
 
 const Header = () => {
 
   const {user,logOut} = useContext(AuthContext)
+  const [,savedCart] = useCart()
 
   const handleLogOut = () =>{
     logOut()
@@ -26,6 +28,7 @@ const Header = () => {
         <li><Link to="/signIn" className='btn btn-neutral btn-sm'>Log In</Link></li></>
       }
       <li><Link to="/secret" >Secret</Link></li>
+      <li><button className="btn btn-neutral btn-sm">Saved<div className="badge">+{savedCart.length}</div></button></li>
    
     </ul>
   </div>

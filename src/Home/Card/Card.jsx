@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
+import useCart from "../../useHooks/useCart";
 
 const Card = () => {
   const { user } = useContext(AuthContext);
+  const [refetch] = useCart()
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,7 +35,7 @@ const [pyearQuery, setPyearQuery] = useState('');
 
   useEffect(() => {
     /*https://pod-music-server-side-j63axr6rr-mehedihasan42.vercel.app/music*/
-    fetch("data.json")
+    fetch("http://localhost:5000/music")
       .then((res) => res.json())
       .then((data) => {
         setInfos(data);
@@ -222,7 +224,7 @@ const [pyearQuery, setPyearQuery] = useState('');
         email: user?.email,
       };
       fetch(
-        "https://pod-music-server-side-j63axr6rr-mehedihasan42.vercel.app/saved",
+        "http://localhost:5000/saved",
         {
           method: "POST",
           body: JSON.stringify(data),
@@ -234,6 +236,7 @@ const [pyearQuery, setPyearQuery] = useState('');
         .then((res) => res.json())
         .then((data) => {
           if (data.insertedId) {
+            refetch()
             Swal.fire({
               position: "top-end",
               icon: "success",
