@@ -53,6 +53,7 @@ const [pyearQuery, setPyearQuery] = useState('');
       label: labelList.map((s) => s.toLowerCase()),
       distributor: distributorList.map((s) => s.toLowerCase()),
       isrc: isrcList.map((s) => s.toLowerCase()),
+      upc: upcList.map((s)=> s.toLowerCase()),
       copr: coprList.map((s) => s.toLowerCase()),
       pyear: pyearList.map((s) => s.toLowerCase()),
     };
@@ -86,6 +87,7 @@ const [pyearQuery, setPyearQuery] = useState('');
             info.Distributor.toLowerCase().includes(distributor)
           )) &&
           (searchQueries.isrc.length === 0 || searchQueries.isrc.some(isrc => info.ISRC.toLowerCase().includes(isrc))) &&
+          (searchQueries.upc.length === 0 || searchQueries.upc.some(upc => info.UPC.toLowerCase().includes(upc))) &&
 (searchQueries.copr.length === 0 || searchQueries.copr.some(copr => info.CopR.toLowerCase().includes(copr))) &&
 (searchQueries.pyear.length === 0 || searchQueries.pyear.some(pyear => info.pYear.toLowerCase().includes(pyear)))
       );

@@ -1,25 +1,49 @@
 import React from 'react';
 import useCart from '../../useHooks/useCart';
 import Header from '../../Home/Header/Header';
+import Swal from 'sweetalert2';
 
 const SavedCart = () => {
     const [refetch,savedCart] = useCart()
 
-    const handleDeleteItem = item =>{
-        console.log(item)
-        fetch(`http://localhost:5000/saved/${item._id}`, {
+    const handleDeleteItem = item => {
+      console.log(item);
+      Swal.fire({
+        title: 'Are you sure?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(result => {
+        if (result.isConfirmed) {
+          fetch(`http://localhost:5000/saved/${item._id}`, {
             method: 'DELETE'
           })
-          .then(res => res.json())
-          .then(data =>{ 
-            console.log(data)
-            if(deletedCount===1){
-                refetch()
-            }
-        })
-          .catch(error => console.error(error))
-    }
-   
+            .then(res => res.json())
+            .then(data => {
+              console.log(data);
+              if (data.deletedCount === 1) { // Check if the delete was successful
+                refetch();
+                Swal.fire(
+                  'Deleted!',
+                  'This music has been deleted.',
+                  'success'
+                );
+              } else {
+                Swal.fire(
+                  'Error!',
+                  'Unable to delete the item.',
+                  'error'
+                );
+              }
+            })
+            .catch(error => console.error(error));
+        }
+      });
+    };
+    
+
     return (
         <div className="overflow-x-auto">
             <Header/>

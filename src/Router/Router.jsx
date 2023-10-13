@@ -4,7 +4,6 @@ import {
 import Home from "../Home/Home/Home";
 import SignUp from "../Authtication/SignUp/SignUp";
 import SignIn from "../Authtication/SignIn/SignIn";
-import Secret from "../Secret/Secret";
 import PrivateRouter from "./PrivateRouter";
 import SavedCart from "../Components/SavedCart/SavedCart";
 
@@ -20,10 +19,6 @@ import SavedCart from "../Components/SavedCart/SavedCart";
     {
       path:"/signIn",
       element:<SignIn/>
-    },
-    {
-      path:"/secret",
-      element:<PrivateRouter><Secret/></PrivateRouter>
     },
     {
       path:"/saved",
