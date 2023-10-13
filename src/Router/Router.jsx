@@ -6,6 +6,7 @@ import SignUp from "../Authtication/SignUp/SignUp";
 import SignIn from "../Authtication/SignIn/SignIn";
 import Secret from "../Secret/Secret";
 import PrivateRouter from "./PrivateRouter";
+import SavedCart from "../Components/SavedCart/SavedCart";
 
   export const router = createBrowserRouter([
     {
@@ -23,5 +24,9 @@ import PrivateRouter from "./PrivateRouter";
     {
       path:"/secret",
       element:<PrivateRouter><Secret/></PrivateRouter>
+    },
+    {
+      path:"/saved",
+      element:<PrivateRouter><SavedCart/></PrivateRouter>
     }
   ]);
