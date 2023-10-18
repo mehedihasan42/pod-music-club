@@ -6,7 +6,7 @@ import useCart from "../../useHooks/useCart";
 
 const Card = () => {
   const { user } = useContext(AuthContext);
-  const [refetch] = useCart()
+  const [refetch] = useCart();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -18,9 +18,9 @@ const Card = () => {
   const [labelQuery, setLabelQuery] = useState("");
   const [distributorQuery, setDistributorQuery] = useState("");
   const [upcQuery, setUpcQuery] = useState("");
-const [isrcQuery, setIsrcQuery] = useState('');
-const [coprQuery, setCoprQuery] = useState('');
-const [pyearQuery, setPyearQuery] = useState('');
+  const [isrcQuery, setIsrcQuery] = useState("");
+  const [coprQuery, setCoprQuery] = useState("");
+  const [pyearQuery, setPyearQuery] = useState("");
   const [searchList, setSearchList] = useState([]); // To store entered singer names
   const [singerList, setSingerList] = useState([]); // To store entered singer names
   const [lyricistList, setlyricistList] = useState([]); // To store entered singer names
@@ -34,8 +34,9 @@ const [pyearQuery, setPyearQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    /*https://pod-music-server-side-j63axr6rr-mehedihasan42.vercel.app/music*/
-    fetch("http://localhost:5000/music")
+    fetch(
+      "https://pod-music-server-side-qypo1cayo-mehedihasan42.vercel.app/music"
+    )
       .then((res) => res.json())
       .then((data) => {
         setInfos(data);
@@ -53,7 +54,7 @@ const [pyearQuery, setPyearQuery] = useState('');
       label: labelList.map((s) => s.toLowerCase()),
       distributor: distributorList.map((s) => s.toLowerCase()),
       isrc: isrcList.map((s) => s.toLowerCase()),
-      upc: upcList.map((s)=> s.toLowerCase()),
+      upc: upcList.map((s) => s.toLowerCase()),
       copr: coprList.map((s) => s.toLowerCase()),
       pyear: pyearList.map((s) => s.toLowerCase()),
     };
@@ -86,10 +87,22 @@ const [pyearQuery, setPyearQuery] = useState('');
           searchQueries.distributor.some((distributor) =>
             info.Distributor.toLowerCase().includes(distributor)
           )) &&
-          (searchQueries.isrc.length === 0 || searchQueries.isrc.some(isrc => info.ISRC.toLowerCase().includes(isrc))) &&
-          (searchQueries.upc.length === 0 || searchQueries.upc.some(upc => info.UPC.toLowerCase().includes(upc))) &&
-(searchQueries.copr.length === 0 || searchQueries.copr.some(copr => info.CopR.toLowerCase().includes(copr))) &&
-(searchQueries.pyear.length === 0 || searchQueries.pyear.some(pyear => info.pYear.toLowerCase().includes(pyear)))
+        (searchQueries.isrc.length === 0 ||
+          searchQueries.isrc.some((isrc) =>
+            info.ISRC.toLowerCase().includes(isrc)
+          )) &&
+        (searchQueries.upc.length === 0 ||
+          searchQueries.upc.some((upc) =>
+            info.UPC.toLowerCase().includes(upc)
+          )) &&
+        (searchQueries.copr.length === 0 ||
+          searchQueries.copr.some((copr) =>
+            info.CopR.toLowerCase().includes(copr)
+          )) &&
+        (searchQueries.pyear.length === 0 ||
+          searchQueries.pyear.some((pyear) =>
+            info.pYear.toLowerCase().includes(pyear)
+          ))
       );
     });
 
@@ -213,32 +226,35 @@ const [pyearQuery, setPyearQuery] = useState('');
   };
 
   /*----handleSaveItem----*/
+ 
   const handleSaveItem = (item) => {
+    const data = {
+      title: item.title,
+      composer: item.composer,
+      label: item.label,
+      lyricist: item.lyricist,
+      singer: item.singer,
+      email: user?.email,
+    }
     console.log(item.title);
     console.log(user?.email);
     if (user && user.email) {
-      const data = {
-        title: item.title,
-        composer: item.composer,
-        label: item.label,
-        lyricist: item.lyricist,
-        singer: item.singer,
-        email: user?.email,
-      };
+     
       fetch(
-        "http://localhost:5000/saved",
+        "/api/saved",
         {
+          // mode: 'no-cors',
           method: "POST",
-          body: JSON.stringify(data),
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify(data),
         }
       )
-        .then((res) => res.json())
+      .then(res=>res.json())
         .then((data) => {
           if (data.insertedId) {
-            refetch()
+            refetch();
             Swal.fire({
               position: "top-end",
               icon: "success",
@@ -247,11 +263,15 @@ const [pyearQuery, setPyearQuery] = useState('');
               timer: 1500,
             });
           }
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
+          // Handle the error, display a message, or retry the request.
         });
     } else {
       Swal.fire({
         title: "Please Log in!",
-        text: "You can not save music without Log in",
+        text: "You can not save music without",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

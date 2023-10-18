@@ -59,7 +59,7 @@ const Header = () => {
             </ul>
           </div>
           <a className="btn btn-ghost normal-case lg:text-2xl font-bold">
-            Pathway Online Development
+         Music Collection
           </a>
         </div>
         <div className="navbar-end hidden lg:flex">
