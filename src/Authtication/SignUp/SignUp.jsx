@@ -22,7 +22,7 @@ const SignUp = () => {
     createUser(data.email,data.password)
     .then(result=>{
       const infos = {email:data.email}
-      fetch('https://pod-music-server-side-qypo1cayo-mehedihasan42.vercel.app/users',{
+      fetch('http://localhost:5000/api/users',{
         method:'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -17,7 +17,8 @@ const SavedCart = () => {
         confirmButtonText: 'Yes, delete it!'
       }).then(result => {
         if (result.isConfirmed) {
-          fetch(`https://pod-music-server-side-qypo1cayo-mehedihasan42.vercel.app/saved/${item._id}`, {
+          console.log(item._id)
+          fetch(`http://localhost:5000/api/saved/${item._id}`, {
             method: 'DELETE'
           })
             .then(res => res.json())

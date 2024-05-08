@@ -3,12 +3,14 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 import useCart from "../../useHooks/useCart";
+import { FaYoutube } from "react-icons/fa";
 
 const Card = () => {
   const { user } = useContext(AuthContext);
   const [refetch] = useCart();
   const navigate = useNavigate();
   const location = useLocation();
+  // console.log(user?.email)
 
   const [infos, setInfos] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,10 +34,22 @@ const Card = () => {
   const [coprList, setCoprList] = useState([]);
   const [pyearList, setPyearList] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [userRole, setUserRole] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/users")
+      .then((res) => res.json())
+      .then((data) => {
+        const currentUser = data.find((userData) => userData.email === user?.email);
+        if (currentUser) {
+          setUserRole(currentUser.role);
+        }
+      });
+  }, [user]);
 
   useEffect(() => {
     fetch(
-      "https://pod-music-server-side-qypo1cayo-mehedihasan42.vercel.app/music"
+      "http://localhost:5000/api/music"
     )
       .then((res) => res.json())
       .then((data) => {
@@ -48,7 +62,7 @@ const Card = () => {
   const handleSearch = () => {
     const searchQueries = {
       title: searchList.map((s) => s.toLowerCase()),
-      singers: singerList.map((s) => s.toLowerCase()), // Use the singerList for filtering
+      singers: singerList.map((s) => s.toLowerCase()), 
       lyricist: lyricistList.map((s) => s.toLowerCase()),
       composer: composerList.map((s) => s.toLowerCase()),
       label: labelList.map((s) => s.toLowerCase()),
@@ -67,6 +81,10 @@ const Card = () => {
           searchQueries.title.some((title) =>
             info.title.toLowerCase().includes(title)
           )) &&
+        (searchQueries.singers.length === 0 ||       //bangla title here
+            searchQueries.singers.some((singer) =>
+              info.singer.toLowerCase().includes(singer)
+            ))&&
         (searchQueries.singers.length === 0 ||
           searchQueries.singers.some((singer) =>
             info.singer.toLowerCase().includes(singer)
@@ -227,7 +245,7 @@ const Card = () => {
 
   /*----handleSaveItem----*/
  
-  const handleSaveItem = (item) => {
+  const handleSaveItem = async (item) => {
     const data = {
       title: item.title,
       composer: item.composer,
@@ -239,11 +257,9 @@ const Card = () => {
     console.log(item.title);
     console.log(user?.email);
     if (user && user.email) {
-     
       fetch(
-        "/api/saved",
+        "http://localhost:5000/api/saved",
         {
-          // mode: 'no-cors',
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -251,7 +267,7 @@ const Card = () => {
           body: JSON.stringify(data),
         }
       )
-      .then(res=>res.json())
+      .then(res=>  res.json())
         .then((data) => {
           if (data.insertedId) {
             refetch();
@@ -264,10 +280,6 @@ const Card = () => {
             });
           }
         })
-        .catch((error) => {
-          console.error("Fetch error:", error);
-          // Handle the error, display a message, or retry the request.
-        });
     } else {
       Swal.fire({
         title: "Please Log in!",
@@ -307,6 +319,33 @@ const Card = () => {
                 <button
                   className="ml-2 text-red-600"
                   onClick={() => handleRemoveTitle(index)}
+                >
+                  x
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* ---bangla title------ */}
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Bangla Title"
+            value={singerQuery}
+            className="input input-bordered input-sm w-full max-w-xs"
+            onChange={(e) => setSingerQuery(e.target.value)}
+            onKeyPress={handleAddSinger}
+          />
+          <div className="absolute top-0 right-0 mt-2 mr-2">
+            {singerList.map((singer, index) => (
+              <div
+                key={index}
+                className="inline-block bg-gray-300 px-2 py-1 rounded-full mr-1"
+              >
+                {singer}
+                <button
+                  className="ml-2 text-red-600"
+                  onClick={() => handleRemoveSinger(index)}
                 >
                   x
                 </button>
@@ -563,12 +602,13 @@ const Card = () => {
         </button>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="table w-full">
+      <div className="">
+         <table className="table w-full">   
           <thead>
             <tr>
               <th></th>
               <th>Title</th>
+              <th>Bangla Title</th>
               <th>Singer</th>
               <th>Lyricist</th>
               <th>Composer</th>
@@ -578,13 +618,17 @@ const Card = () => {
               <th>UPC</th>
               <th>CopR</th>
               <th>P Year</th>
+              <th>Link</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {searchResults.map((info, index) => (
+             
               <tr key={index}>
-                <th>{index + 1}</th>
+                <td>{index + 1}</td>
                 <td>{info.title}</td>
+                <td>-</td>
                 <td>{info.singer}</td>
                 <td>{info.lyricist}</td>
                 <td>{info.composer}</td>
@@ -593,7 +637,8 @@ const Card = () => {
                 <td>{info.ISRC}</td>
                 <td>{info.UPC}</td>
                 <td>{info.CopR}</td>
-                <td>{info.pYear}</td>
+                <td>{info.Year}</td>
+                <td><FaYoutube className="text-3xl text-red-600 cursor-pointer"/></td>
                 <td>
                   <button
                     onClick={() => handleSaveItem(info)}
@@ -602,9 +647,15 @@ const Card = () => {
                     Save
                   </button>
                 </td>
+                <td>
+            {userRole === "admin" && (
+              <button className="btn btn-neutral btn-sm">Edit</button>
+            )}
+          </td>
               </tr>
             ))}
           </tbody>
+          <div className="overflow-x-scroll max-w-80"></div>
         </table>
       </div>
     </>
