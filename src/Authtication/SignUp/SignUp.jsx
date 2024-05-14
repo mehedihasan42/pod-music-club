@@ -22,7 +22,7 @@ const SignUp = () => {
     createUser(data.email,data.password)
     .then(result=>{
       const infos = {email:data.email}
-      fetch('http://localhost:5000/api/users',{
+      fetch('https://pod-music-server.onrender.com/api/users',{
         method:'POST',
         headers: {
           'Content-Type': 'application/json'

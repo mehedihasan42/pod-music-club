@@ -18,7 +18,7 @@ const SavedCart = () => {
       }).then(result => {
         if (result.isConfirmed) {
           console.log(item._id)
-          fetch(`http://localhost:5000/api/saved/${item._id}`, {
+          fetch(`https://pod-music-server.onrender.com/api/saved/${item._id}`, {
             method: 'DELETE'
           })
             .then(res => res.json())

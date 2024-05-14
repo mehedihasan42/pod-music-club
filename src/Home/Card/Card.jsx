@@ -35,9 +35,10 @@ const Card = () => {
   const [pyearList, setPyearList] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [userRole, setUserRole] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/users")
+    fetch("https://pod-music-server.onrender.com/api/users")
       .then((res) => res.json())
       .then((data) => {
         const currentUser = data.find((userData) => userData.email === user?.email);
@@ -48,9 +49,7 @@ const Card = () => {
   }, [user]);
 
   useEffect(() => {
-    fetch(
-      "http://localhost:5000/api/music"
-    )
+    fetch("https://pod-music-server.onrender.com/api/music")
       .then((res) => res.json())
       .then((data) => {
         setInfos(data);
@@ -58,193 +57,63 @@ const Card = () => {
       });
   }, []);
 
-  /*handle Search*/
-  const handleSearch = () => {
-    const searchQueries = {
-      title: searchList.map((s) => s.toLowerCase()),
-      singers: singerList.map((s) => s.toLowerCase()), 
-      lyricist: lyricistList.map((s) => s.toLowerCase()),
-      composer: composerList.map((s) => s.toLowerCase()),
-      label: labelList.map((s) => s.toLowerCase()),
-      distributor: distributorList.map((s) => s.toLowerCase()),
-      isrc: isrcList.map((s) => s.toLowerCase()),
-      upc: upcList.map((s) => s.toLowerCase()),
-      copr: coprList.map((s) => s.toLowerCase()),
-      pyear: pyearList.map((s) => s.toLowerCase()),
-    };
+  
+ // Function to handle changes in the search input
+ const handleSearchChange = (e) => {
+  const { value } = e.target;
+  setSearchQuery(value);
+  if (value.trim() === "") {
+    setSuggestions([]);
+    return;
+  }
+  const filteredSuggestions = infos.filter((info) =>
+    info.title.toLowerCase().includes(value.toLowerCase())
+  );
+  setSuggestions(filteredSuggestions);
+};
 
-    /*------filter-----------*/
-    const filteredData = infos.filter((info) => {
-      return (
-        // searchQueries.title.every(term => info.title.toLowerCase().includes(term)) &&
-        (searchQueries.title.length === 0 ||
-          searchQueries.title.some((title) =>
-            info.title.toLowerCase().includes(title)
-          )) &&
-        (searchQueries.singers.length === 0 ||       //bangla title here
-            searchQueries.singers.some((singer) =>
-              info.singer.toLowerCase().includes(singer)
-            ))&&
-        (searchQueries.singers.length === 0 ||
-          searchQueries.singers.some((singer) =>
-            info.singer.toLowerCase().includes(singer)
-          )) &&
-        (searchQueries.lyricist.length === 0 ||
-          searchQueries.lyricist.some((lyricist) =>
-            info.lyricist.toLowerCase().includes(lyricist)
-          )) &&
-        (searchQueries.composer.length === 0 ||
-          searchQueries.composer.some((composer) =>
-            info.composer.toLowerCase().includes(composer)
-          )) &&
-        (searchQueries.label.length === 0 ||
-          searchQueries.label.some((label) =>
-            info.label.toLowerCase().includes(label)
-          )) &&
-        (searchQueries.distributor.length === 0 ||
-          searchQueries.distributor.some((distributor) =>
-            info.Distributor.toLowerCase().includes(distributor)
-          )) &&
-        (searchQueries.isrc.length === 0 ||
-          searchQueries.isrc.some((isrc) =>
-            info.ISRC.toLowerCase().includes(isrc)
-          )) &&
-        (searchQueries.upc.length === 0 ||
-          searchQueries.upc.some((upc) =>
-            info.UPC.toLowerCase().includes(upc)
-          )) &&
-        (searchQueries.copr.length === 0 ||
-          searchQueries.copr.some((copr) =>
-            info.CopR.toLowerCase().includes(copr)
-          )) &&
-        (searchQueries.pyear.length === 0 ||
-          searchQueries.pyear.some((pyear) =>
-            info.pYear.toLowerCase().includes(pyear)
-          ))
-      );
-    });
+// Function to select a suggestion from the autocomplete list
+const handleSuggestionClick = (title) => {
+setSearchQuery(title);
+setSearchList([...searchList, title]);
+setSuggestions([]); 
+setSearchQuery("");
+handleSearch();
+};
 
-    setSearchResults(filteredData);
+
+// Function to handle search
+const handleSearch = () => {
+if (searchList.length === 0) {
+  setSearchResults(infos); // Display all results if search list is empty
+} else {
+  const searchQueries = {
+    title: searchList.map((s) => s.toLowerCase()),
   };
 
-  // Function to add singer name to the list when Enter or Space is pressed
-  // -----------handle add function------------
-  const handleAddTitle = (e) => {
-    if (e.key === "Enter" && searchQuery.trim() !== "") {
-      setSearchList([...searchList, searchQuery.trim()]);
-      setSearchQuery(""); // Clear the input field after adding
-    }
-  };
-  const handleAddSinger = (e) => {
-    if (e.key === "Enter" && singerQuery.trim() !== "") {
-      setSingerList([...singerList, singerQuery.trim()]);
-      setSingerQuery(""); // Clear the input field after adding
-    }
-  };
-  const handleAddLyricist = (e) => {
-    if (e.key === "Enter" && lyricistQuery.trim() !== "") {
-      setlyricistList([...lyricistList, lyricistQuery.trim()]);
-      setLyricistQuery(""); // Clear the input field after adding
-    }
-  };
-  const handleAddComposer = (e) => {
-    if (e.key === "Enter" && composerQuery.trim() !== "") {
-      setcomposerList([...composerList, composerQuery.trim()]);
-      setComposerQuery("");
-    }
-  };
-  const handleAddLabel = (e) => {
-    if (e.key === "Enter" && labelQuery.trim() !== "") {
-      setlabelList([...labelList, labelQuery.trim()]);
-      setLabelQuery("");
-    }
-  };
-  const handleAddDistributor = (e) => {
-    if (e.key === "Enter" && distributorQuery.trim() !== "") {
-      setDistributorlList([...distributorList, distributorQuery.trim()]);
-      setDistributorQuery("");
-    }
-  };
-  const handleAddIsrc = (e) => {
-    if (e.key === "Enter" && isrcQuery.trim() !== "") {
-      setIsrcList([...isrcList, isrcQuery.trim()]);
-      setIsrcQuery("");
-    }
-  };
-  const handleAddUpc = (e) => {
-    if (e.key === "Enter" && upcQuery.trim() !== "") {
-      setUpcList([...upcList, upcQuery.trim()]);
-      setUpcQuery("");
-    }
-  };
-  const handleAddCopr = (e) => {
-    if (e.key === "Enter" && coprQuery.trim() !== "") {
-      setCoprList([...coprList, coprQuery.trim()]);
-      setCoprQuery("");
-    }
-  };
-  const handleAddPyear = (e) => {
-    if (e.key === "Enter" && pyearQuery.trim() !== "") {
-      setPyearList([...pyearList, pyearQuery.trim()]);
-      setPyearQuery("");
-    }
-  };
+  const filteredData = infos.filter((info) =>
+    searchQueries.title.some((title) =>
+      info.title.toLowerCase().includes(title)
+    )
+  );
+  setSearchResults(filteredData);
+}
+};
 
-  // Function to remove a singer name from the list
-  // ----------handle remove function------------
-  const handleRemoveTitle = (index) => {
-    const updatedSearchList = [...searchList];
-    updatedSearchList.splice(index, 1);
-    setSearchList(updatedSearchList);
-  };
-  const handleRemoveSinger = (index) => {
-    const updatedSingerList = [...singerList];
-    updatedSingerList.splice(index, 1);
-    setSingerList(updatedSingerList);
-  };
-  const handleRemoveLyricist = (index) => {
-    const updatedLyricistList = [...lyricistList];
-    updatedLyricistList.splice(index, 1);
-    setlyricistList(updatedLyricistList);
-  };
-  const handleRemoveComposer = (index) => {
-    const updatedComposerList = [...composerList];
-    updatedComposerList.splice(index, 1);
-    setcomposerList(updatedComposerList);
-  };
-  const handleRemoveLabel = (index) => {
-    const updatedLabelList = [...composerList];
-    updatedLabelList.splice(index, 1);
-    setlabelList(updatedLabelList);
-  };
-  const handleRemovedistributor = (index) => {
-    const updatedDistributorlList = [...distributorList];
-    updatedDistributorlList.splice(index, 1);
-    setDistributorlList(updatedDistributorlList);
-  };
-  const handleRemoveIsrc = (index) => {
-    const updatedIsrclList = [...isrcList];
-    updatedIsrclList.splice(index, 1);
-    setIsrcList(updatedIsrclList);
-  };
-  const handleRemoveUpc = (index) => {
-    const updatedUpcList = [...upcList];
-    updatedUpcList.splice(index, 1);
-    setUpcList(updatedUpcList);
-  };
-  const handleRemoveCopr = (index) => {
-    const updatedCoprList = [...upcList];
-    updatedCoprList.splice(index, 1);
-    setCoprList(updatedCoprList);
-  };
-  const handleRemovePyear = (index) => {
-    const updatedPyearList = [...pyearList];
-    updatedPyearList.splice(index, 1);
-    setPyearList(updatedPyearList);
-  };
 
-  /*----handleSaveItem----*/
+// Function to remove a search item from the list
+const handleRemoveTitle = (index) => {
+  const updatedSearchList = [...searchList];
+  updatedSearchList.splice(index, 1);
+  setSearchList(updatedSearchList);
+};
+
+  
+
+
+  
  
+  /*----handleSaveItem----*/
   const handleSaveItem = async (item) => {
     const data = {
       title: item.title,
@@ -258,7 +127,7 @@ const Card = () => {
     console.log(user?.email);
     if (user && user.email) {
       fetch(
-        "http://localhost:5000/api/saved",
+        "https://pod-music-server.onrender.com/api/saved",
         {
           method: "POST",
           headers: {
@@ -300,20 +169,31 @@ const Card = () => {
   return (
     <>
       <div className="grid lg:grid-cols-3 my-4 space-y-2">
-        <div className="relative">
+        {/* ---title--- */}
+      <div className="relative">
           <input
             type="text"
             placeholder="Title"
             value={searchQuery}
             className="input input-bordered input-sm w-full max-w-xs"
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyPress={handleAddTitle}
+            onChange={handleSearchChange}
           />
-          <div className="absolute top-0 right-0 mt-2 mr-2">
+          <div className="absolute top-10 z-10 left-0 w-full bg-base-300 text-black rounded-b-lg shadow-md">
+            {suggestions.map((suggestion, index) => (
+              <div
+                key={index}
+                className="cursor-pointer p-2 hover:bg-gray-100"
+                onClick={() => handleSuggestionClick(suggestion.title)}
+              >
+                {suggestion.title}
+              </div>
+            ))}
+          </div>
+          <div className="top-0 right-0 m-0">
             {searchList.map((title, index) => (
               <div
                 key={index}
-                className="inline-block bg-gray-300 px-2 py-1 rounded-full mr-1"
+                className="inline-block bg-gray-300 px-2 py-1 mt-1 mr-1"
               >
                 {title}
                 <button
@@ -327,14 +207,14 @@ const Card = () => {
           </div>
         </div>
         {/* ---bangla title------ */}
-        <div className="relative">
+        {/* <div className="relative">
           <input
             type="text"
             placeholder="Bangla Title"
             value={singerQuery}
             className="input input-bordered input-sm w-full max-w-xs"
             onChange={(e) => setSingerQuery(e.target.value)}
-            onKeyPress={handleAddSinger}
+            //onKeyPress={handleAddSinger}
           />
           <div className="absolute top-0 right-0 mt-2 mr-2">
             {singerList.map((singer, index) => (
@@ -352,7 +232,7 @@ const Card = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
         {/* ------singer------------ */}
         <div className="relative">
           <input
@@ -361,7 +241,7 @@ const Card = () => {
             value={singerQuery}
             className="input input-bordered input-sm w-full max-w-xs"
             onChange={(e) => setSingerQuery(e.target.value)}
-            onKeyPress={handleAddSinger}
+            //onKeyPress={handleAddSinger}
           />
           <div className="absolute top-0 right-0 mt-2 mr-2">
             {singerList.map((singer, index) => (
@@ -388,7 +268,7 @@ const Card = () => {
             value={lyricistQuery}
             className="input input-bordered input-sm w-full max-w-xs"
             onChange={(e) => setLyricistQuery(e.target.value)}
-            onKeyPress={handleAddLyricist}
+            //onKeyPress={handleAddLyricist}
           />
           <div className="absolute top-0 right-0 mt-2 mr-2">
             {lyricistList.map((lyricist, index) => (
@@ -415,7 +295,7 @@ const Card = () => {
             value={composerQuery}
             className="input input-bordered input-sm w-full max-w-xs"
             onChange={(e) => setComposerQuery(e.target.value)}
-            onKeyPress={handleAddComposer}
+            //onKeyPress={handleAddComposer}
           />
           <div className="absolute top-0 right-0 mt-2 mr-2">
             {composerList.map((composer, index) => (
@@ -442,7 +322,7 @@ const Card = () => {
             value={labelQuery}
             className="input input-bordered input-sm w-full max-w-xs"
             onChange={(e) => setLabelQuery(e.target.value)}
-            onKeyPress={handleAddLabel}
+            //onKeyPress={handleAddLabel}
           />
           <div className="absolute top-0 right-0 mt-2 mr-2">
             {labelList.map((label, index) => (
@@ -469,7 +349,7 @@ const Card = () => {
             value={distributorQuery}
             className="input input-bordered input-sm w-full max-w-xs"
             onChange={(e) => setDistributorQuery(e.target.value)}
-            onKeyPress={handleAddDistributor}
+            //onKeyPress={handleAddDistributor}
           />
           <div className="absolute top-0 right-0 mt-2 mr-2">
             {distributorList.map((distributor, index) => (
@@ -496,7 +376,7 @@ const Card = () => {
             value={isrcQuery}
             className="input input-bordered input-sm w-full max-w-xs"
             onChange={(e) => setIsrcQuery(e.target.value)}
-            onKeyPress={handleAddIsrc}
+            //onKeyPress={handleAddIsrc}
           />
           <div className="absolute top-0 right-0 mt-2 mr-2">
             {isrcList.map((isrc, index) => (
@@ -523,7 +403,7 @@ const Card = () => {
             value={upcQuery}
             className="input input-bordered input-sm w-full max-w-xs"
             onChange={(e) => setUpcQuery(e.target.value)}
-            onKeyPress={handleAddUpc}
+            //onKeyPress={handleAddUpc}
           />
           <div className="absolute top-0 right-0 mt-2 mr-2">
             {upcList.map((upc, index) => (
@@ -550,7 +430,7 @@ const Card = () => {
             value={coprQuery}
             className="input input-bordered input-sm w-full max-w-xs"
             onChange={(e) => setCoprQuery(e.target.value)}
-            onKeyPress={handleAddCopr}
+            //onKeyPress={handleAddCopr}
           />
           <div className="absolute top-0 right-0 mt-2 mr-2">
             {coprList.map((copr, index) => (
@@ -577,7 +457,7 @@ const Card = () => {
             value={pyearQuery}
             className="input input-bordered input-sm w-full max-w-xs"
             onChange={(e) => setPyearQuery(e.target.value)}
-            onKeyPress={handleAddPyear}
+            //onKeyPress={handleAddPyear}
           />
           <div className="absolute top-0 right-0 mt-2 mr-2">
             {pyearList.map((pyear, index) => (
@@ -596,68 +476,70 @@ const Card = () => {
             ))}
           </div>
         </div>
-        {/* Search button */}
         <button className="btn btn-neutral btn-sm w-80" onClick={handleSearch}>
           Search
         </button>
       </div>
 
-      <div className="">
-         <table className="table w-full">   
-          <thead>
-            <tr>
-              <th></th>
-              <th>Title</th>
-              <th>Bangla Title</th>
-              <th>Singer</th>
-              <th>Lyricist</th>
-              <th>Composer</th>
-              <th>Label</th>
-              <th>Distributor</th>
-              <th>ISRC</th>
-              <th>UPC</th>
-              <th>CopR</th>
-              <th>P Year</th>
-              <th>Link</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {searchResults.map((info, index) => (
-             
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{info.title}</td>
-                <td>-</td>
-                <td>{info.singer}</td>
-                <td>{info.lyricist}</td>
-                <td>{info.composer}</td>
-                <td>{info.label}</td>
-                <td>{info.Distributor}</td>
-                <td>{info.ISRC}</td>
-                <td>{info.UPC}</td>
-                <td>{info.CopR}</td>
-                <td>{info.Year}</td>
-                <td><FaYoutube className="text-3xl text-red-600 cursor-pointer"/></td>
-                <td>
-                  <button
-                    onClick={() => handleSaveItem(info)}
-                    className="btn btn-neutral btn-sm"
-                  >
-                    Save
-                  </button>
-                </td>
-                <td>
-            {userRole === "admin" && (
-              <button className="btn btn-neutral btn-sm">Edit</button>
-            )}
+      {/* <div className=""> */}
+     
+  <table className="table w-full">
+    <thead>
+      <tr>
+        <th className="w-8"></th> {/* Adjust width for index column */}
+        <th className="w-24">Title</th>
+        <th className="w-24">Bangla Title</th>
+        <th className="w-24">Singer</th>
+        <th className="w-24">Lyricist</th>
+        <th className="w-24">Composer</th>
+        <th className="w-24">Label</th>
+        <th className="w-24">Distributor</th>
+        <th className="w-24">ISRC</th>
+        <th className="w-24">UPC</th>
+        <th className="w-24">CopR</th>
+        <th className="w-24">P Year</th>
+        <th className="w-24">Link</th>
+        <th className="w-24"></th> {/* Adjust width for Save button column */}
+        {userRole === "admin" && <th className="w-24"></th>} {/* Adjust width for Edit button column */}
+      </tr>
+    </thead>
+    <tbody>
+      {searchResults.map((info, index) => (
+        <tr key={index}>
+          <td className="w-8">{index + 1}</td>
+          <td className="w-24">{info.title}</td>
+          <td className="w-24">-</td>
+          <td className="w-24">{info.singer}</td>
+          <td className="w-24">{info.lyricist}</td>
+          <td className="w-24">{info.composer}</td>
+          <td className="w-24">{info.label}</td>
+          <td className="w-24">{info.Distributor}</td>
+          <td className="max-w-24">{info.ISRC}</td>
+          <td className="max-w-24">{info.UPC}</td>
+          <td className="w-24">{info.CopR}</td>
+          <td className="w-24">{info.Year}</td>
+          <td className="w-24"><FaYoutube className="text-3xl text-red-600 cursor-pointer"/></td>
+          <td className="w-24">
+            <button
+              onClick={() => handleSaveItem(info)}
+              className="btn btn-neutral btn-sm"
+            >
+              Save
+            </button>
           </td>
-              </tr>
-            ))}
-          </tbody>
-          <div className="overflow-x-scroll max-w-80"></div>
-        </table>
-      </div>
+          {userRole === "admin" && (
+            <td className="w-24">
+              <button className="btn btn-neutral btn-sm">Edit</button>
+            </td>
+          )}
+        </tr>
+      ))}
+    </tbody>
+    <div className="overflow-x-scroll max-w-screen-lg mx-auto">
+</div>
+  </table>
+
+      {/* </div> */}
     </>
   );
 };

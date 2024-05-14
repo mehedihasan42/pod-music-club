@@ -11,7 +11,7 @@ const useCart = () => {
         queryKey: ['saved',user?.email],
         enabled: !!user?.email,
         queryFn: async()=>{
-            const res = await fetch(`http://localhost:5000/api/saved?email=${user?.email}`)
+            const res = await fetch(`https://pod-music-server.onrender.com/api/saved?email=${user?.email}`)
             return res.json()
         },
       })
