@@ -514,8 +514,8 @@ const handleRemoveTitle = (index) => {
           <td className="w-24">{info.composer}</td>
           <td className="w-24">{info.label}</td>
           <td className="w-24">{info.Distributor}</td>
-          <td className="max-w-24">{info.ISRC}</td>
-          <td className="max-w-24">{info.UPC}</td>
+          <td className="max-w-96 mx-0 px-0">{info.ISRC}</td>
+          <td className="max-w-96 mx-0 px-0">{info.UPC}</td>
           <td className="w-24">{info.CopR}</td>
           <td className="w-24">{info.Year}</td>
           <td className="w-24"><FaYoutube className="text-3xl text-red-600 cursor-pointer"/></td>
