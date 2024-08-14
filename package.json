@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy":"https://pod-music-server-production.up.railway.app",
+  "proxy": "https://pod-music-server-production.up.railway.app",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -21,6 +21,7 @@
     "react-fast-marquee": "^1.6.1",
     "react-hook-form": "^7.47.0",
     "react-icons": "^4.11.0",
+    "react-paginate": "^8.2.0",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.16.0",
     "sort-by": "^1.2.0",
