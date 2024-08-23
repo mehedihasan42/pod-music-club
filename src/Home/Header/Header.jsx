@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useCart from "../../useHooks/useCart";
 import { GiHamburgerMenu } from 'react-icons/gi';
+import useAdmin from "../../useHooks/useAdmin";
 
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
   const [, savedCart] = useCart();
+  const userRole = useAdmin()
+  // console.log(userRole)
 
   const handleLogOut = () => {
     logOut()
@@ -69,6 +72,15 @@ const Header = () => {
                 Home
               </Link>
             </li>
+            {
+              userRole ==="admin"&&(
+                <li>
+                <Link to="/admin" className="btn btn-neutral btn-sm">
+                  Profile
+                </Link>
+              </li>
+              )
+            }   
             <li>
               <Link to="/saved" className="btn btn-neutral btn-sm">
                 Saved<div className="badge">+{savedCart.length}</div>

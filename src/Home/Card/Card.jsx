@@ -3,16 +3,20 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useCart from "../../useHooks/useCart";
-import { FaYoutube } from "react-icons/fa";
+import { FaArrowCircleRight,FaArrowCircleLeft } from "react-icons/fa";
+import useAdmin from "../../useHooks/useAdmin";
+import useMusics from "../../useHooks/useMusics";
+
 
 const Card = () => {
   const { user } = useContext(AuthContext);
   const [refetch] = useCart();
   const navigate = useNavigate();
   const location = useLocation();
-  // console.log(user?.email)
+  const userRole = useAdmin()
+  // const data = useMusics()
 
-  const [userRole,setUserRole] = useState([])
+
   const [infos, setInfos] = useState([]);
   //title
   const [titleSearchQuery, setTitleSearchQuery] = useState("");
@@ -63,16 +67,7 @@ const Card = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = searchResults.slice(indexOfFirstItem, indexOfLastItem);
 
-  useEffect(() => {
-    fetch("https://pod-music-server.onrender.com/api/users")
-      .then((res) => res.json())
-      .then((data) => {
-        const currentUser = data.find((userData) => userData.email === user?.email);
-        if (currentUser) {
-          setUserRole(currentUser.role);
-        }
-      });
-  }, [user]);
+
 
   useEffect(() => {
     fetch("https://pod-music-server.onrender.com/api/music")
@@ -528,6 +523,37 @@ const handleRemovePyear = (index) => {
       });
     }
   };
+
+ 
+
+  const handleDeleteItem = async(id)=>{
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`https://pod-music-server.onrender.com/api/music/${id}`, {
+          method: 'DELETE'
+        })
+        .then(res => res.json())
+        .then(result =>{
+          if(result.deletedCount >0){
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success"
+            });
+          }
+        }) 
+        setSearchResults(prevItems => prevItems.filter(item => item._id !== id));
+      }
+    });
+  }
 
   const totalPages = Math.ceil(searchResults.length / itemsPerPage);
 
@@ -996,7 +1022,12 @@ const handlePreviousPage = () => {
           </td>
           {userRole === "admin" && (
             <td className="w-24">
-              <Link className="btn btn-neutral btn-sm">Edit</Link>
+              <Link to={`/editPage/${info._id}`} className="btn btn-neutral btn-sm">Edit</Link>
+            </td>
+          )}
+          {userRole === "admin" && (
+            <td className="w-24">
+              <button onClick={()=>handleDeleteItem(info._id)} className="btn btn-neutral btn-sm">Delete</button>
             </td>
           )}
         </tr>
@@ -1011,21 +1042,19 @@ const handlePreviousPage = () => {
         onClick={handlePreviousPage}
         disabled={currentPage === 1}
       >
-        Previous
+       <FaArrowCircleLeft className="text-xl"/>
       </button>
       <span>
-        Page {currentPage} of {totalPages}
+        {currentPage} of {totalPages}
       </span>
       <button
         className="btn btn-sm"
         onClick={handleNextPage}
         disabled={currentPage === totalPages}
       >
-        Next
+         <FaArrowCircleRight className="text-xl"/>
       </button>
     </div>
-
-
     </>
   );
 };
