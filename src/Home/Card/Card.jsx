@@ -59,10 +59,16 @@ const Card = () => {
   const [yearSearchList, setYearSearchList] = useState([]);
   const [yearSuggestions, setYearSuggestions] = useState([]);
 
+  const [totalData,setTotalData] = useState()
+
+  const handleCnangeData = (event) =>{
+    setTotalData(event.target.value)
+  }
+
   const [searchResults, setSearchResults] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 50;
+  const itemsPerPage = totalData?totalData:50;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = searchResults.slice(indexOfFirstItem, indexOfLastItem);
@@ -87,7 +93,7 @@ const Card = () => {
       return;
     }
     const filteredSuggestions = infos.filter((info) =>
-      info.title.toLowerCase().includes(value.toLowerCase())
+      info.AlbumTitle.toLowerCase().includes(value.toLowerCase())
     )
     .reduce((acc, curr) => {
       if (!acc.some(item => item.title === curr.title)) {
@@ -110,7 +116,7 @@ const Card = () => {
       return;
     }
     const filteredSuggestions = infos.filter((info) =>
-      info.singer.toLowerCase().includes(value.toLowerCase())
+      info.Singer.toLowerCase().includes(value.toLowerCase())
     )
     .reduce((acc, curr) => {
       if (!acc.some(item => item.singer === curr.singer)) {
@@ -571,8 +577,8 @@ const handlePreviousPage = () => {
 
 
   return (
-    <>
-      <div className="grid lg:grid-cols-3 my-4 space-y-2">
+    <div className="">
+      <div className="grid lg:grid-cols-3 my-4 space-y-2 mt-12">
         {/* ---title--- */}
         <div className="relative">
           <input
@@ -972,47 +978,57 @@ const handlePreviousPage = () => {
             ))}
           </div>
         </div>
-        <button className="btn btn-neutral btn-sm w-80" onClick={handleSearch}>
+        <button className="btn btn-neutral btn-sm ml-10 w-80" onClick={handleSearch}>
           Search
         </button>
       </div>
      
-  <table className="table w-full">
-    <thead>
+  <table className="table">
+    <thead className="sticky top-16 bg-white">
       <tr>
-        <th className="w-8"></th> {/* Adjust width for index column */}
-        <th className="w-24">Title</th>
-        <th className="w-24">Bangla Title</th>
-        <th className="w-24">Singer</th>
-        <th className="w-24">Lyricist</th>
-        <th className="w-24">Composer</th>
-        <th className="w-24">Label</th>
-        <th className="w-24">Distributor</th>
-        <th className="w-24">ISRC</th>
-        <th className="w-24">UPC</th>
-        <th className="w-24">CopR</th>
-        <th className="w-24">P Year</th>
-        <th className="w-24">Link</th>
-        <th className="w-24"></th> {/* Adjust width for Save button column */}
+        <th ></th> {/* Adjust width for index column */}
+        <th className="w-44">  Album Title  </th>
+        <th >Track Titles</th>
+        <th >Bangla Title</th>
+        <th >Singer</th>
+        <th >Lyricist</th>
+        <th >Composer</th>
+        <th >Label</th>
+        <th >PUB</th>
+        <th>UPC</th>
+        <th >ISRC</th>
+        <th >CopR</th>
+        <th >Royalty</th>
+        <th >P Year</th>
+        <th >Date</th>
+        <th >FB Date</th>
+        <th >Remarks</th>
+        <th >Link</th>
+        <th ></th> {/* Adjust width for Save button column */}
       </tr>
     </thead>
     <tbody>
       {currentItems.map((info, index) => (
-        <tr key={index}>
-          <td className="w-8">{index + 1}</td>
-          <td className="w-24">{info.title}</td>
-          <td className="w-24">-</td>
-          <td className="w-24">{info.singer}</td>
-          <td className="w-24">{info.lyricist}</td>
-          <td className="w-24">{info.composer}</td>
-          <td className="w-24">{info.label}</td>
-          <td className="w-24">{info.Distributor}</td>
-          <td className="max-w-96 mx-0 px-0">{info.ISRC}</td>
-          <td className="max-w-96 mx-0 px-0">{info.UPC}</td>
-          <td className="w-24">{info.CopR}</td>
-          <td className="w-24">{info.Year}</td>
-          {/* <td className="w-24"><FaYoutube className="text-3xl text-red-600 cursor-pointer"/></td> */}
-          <td className="w-24">
+        <tr className="" key={index}>
+          <td>{index + 1}</td>
+          <td className="w-11 whitespace-nowrap">{info.AlbumTitle}</td>
+          <td className="w-11 whitespace-nowrap">{info.TrackTitles}</td>
+          <td>-</td>
+          <td className="w-11 whitespace-nowrap">{info.Singer}</td>
+          <td className="w-11 whitespace-nowrap">{info.Lyricist}</td>
+          <td className="w-11 whitespace-nowrap">{info.Composers}</td>
+          <td className="w-11 whitespace-nowrap">{info.Label}</td>
+          <td className="w-11 whitespace-nowrap">{info.PUB}</td>
+          <td className="w-11 whitespace-nowrap">{info.UPC}</td>
+          <td className="w-11 whitespace-nowrap">{info.ISRC}</td>
+          <td className="w-11 whitespace-nowrap">{info.CopRNo}</td>
+          <td className="w-11 whitespace-nowrap">{info.Royalty}</td>
+          <td className="w-11 whitespace-nowrap">{info.Pyear}</td>
+          <td className="w-11 whitespace-nowrap">{info.Date}</td>
+          <td className="w-11 whitespace-nowrap">{info.FBDate}</td>
+          <td className="w-11 whitespace-nowrap">{info.Remarks}</td>
+          {/* <td ><FaYoutube className="text-3xl text-red-600 cursor-pointer"/></td> */}
+          <td >
             <button
               onClick={() => handleSaveItem(info)}
               className="btn btn-neutral btn-sm"
@@ -1021,12 +1037,12 @@ const handlePreviousPage = () => {
             </button>
           </td>
           {userRole === "admin" && (
-            <td className="w-24">
+            <td >
               <Link to={`/editPage/${info._id}`} className="btn btn-neutral btn-sm">Edit</Link>
             </td>
           )}
           {userRole === "admin" && (
-            <td className="w-24">
+            <td >
               <button onClick={()=>handleDeleteItem(info._id)} className="btn btn-neutral btn-sm">Delete</button>
             </td>
           )}
@@ -1036,7 +1052,12 @@ const handlePreviousPage = () => {
     <div className="overflow-x-scroll max-w-screen-lg mx-auto">
 </div>
   </table>
-  <div className="flex justify-center space-x-4 mt-4">
+  <div className="flex justify-end space-x-4 mt-4">
+  <select onChange={handleCnangeData} defaultValue={50} className="select select-bordered select-sm w-24 max-w-xs">
+        <option value={10}>10</option>
+        <option value={50}>50</option>
+        <option value={100}>100</option>
+      </select>
       <button
         className="btn btn-sm"
         onClick={handlePreviousPage}
@@ -1055,7 +1076,7 @@ const handlePreviousPage = () => {
          <FaArrowCircleRight className="text-xl"/>
       </button>
     </div>
-    </>
+    </div>
   );
 };
 

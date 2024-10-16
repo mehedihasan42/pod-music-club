@@ -2,13 +2,17 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useCart from "../../useHooks/useCart";
-import { GiHamburgerMenu } from 'react-icons/gi';
+import { GiHamburgerMenu } from "react-icons/gi";
 import useAdmin from "../../useHooks/useAdmin";
+import { IoMdAdd } from "react-icons/io";
+import { RiAdminFill } from "react-icons/ri";
+import { FaUsers } from "react-icons/fa";
+import { CiSaveDown2 } from "react-icons/ci";
 
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
   const [, savedCart] = useCart();
-  const userRole = useAdmin()
+  const userRole = useAdmin();
   // console.log(userRole)
 
   const handleLogOut = () => {
@@ -18,80 +22,68 @@ const Header = () => {
   };
 
   return (
-    <>
-      <div className="navbar bg-base-100">
-        <div className="navbar-start">
-          <div className="dropdown shadow rounded">
-            <label tabIndex={0} className="btn btn-ghost lg:hidden">
-             <GiHamburgerMenu className="text-2xl"/>
-            </label>
+    <div className="fixed top-0 left-0 w-full z-50">
+      <div className="navbar bg-neutral text-neutral-content">
+        <div className="flex-1">
+        <Link to="/" className="btn  btn-ghost normal-case lg:text-2xl font-bold ">
+        <span className="font-serif">Music</span>{" "}
+        <span className="font-mono">Collection</span>
+              </Link>
+        </div>
+        <div className="flex-none gap-2">
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="w-16 rounded-full">
+                <img src="https://i.ibb.co.com/K91fJzq/pod-image.jpg" alt="" />
+                {/* {
+            user? <img
+            alt="https://i.ibb.co.com/K91fJzq/pod-image.jpg"
+            src={user?.photoURL} />:<></>
+          }    */}
+              </div>
+            </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 space-y-2"
+              className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow bg-base-300 text-black"
             >
+              {userRole === "admin" && (
               <li>
-                <Link to="/" className="btn btn-neutral btn-xs">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/saved" className="btn btn-neutral btn-xs">
-                  Saved<div className="badge">+{savedCart.length}</div>
-                </Link>
-              </li>
-              {user ? (
-                <>
-                  <li>
-                    <Link
-                      onClick={handleLogOut}
-                      className="btn btn-neutral btn-xs"
-                    >
-                      Log Out
-                    </Link>
-                  </li>
-                </>
-              ) : (
-                <>
-                  <li>
-                    <Link to="/signIn" className="btn btn-neutral btn-sm">
-                      Log In
-                    </Link>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
-          <a className="btn btn-ghost normal-case lg:text-2xl font-bold">
-         Music Collection
-          </a>
-        </div>
-        <div className="navbar-end hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 space-x-2 space-y-2 lg:space-y-0 grid lg:flex">
-            <li>
-              <Link to="/" className="btn btn-neutral btn-sm">
-                Home
-              </Link>
-            </li>
-            {
-              userRole ==="admin"&&(
-                <li>
-                <Link to="/admin" className="btn btn-neutral btn-sm">
+                <Link to="/admin" className="">
                   Profile
+                  <RiAdminFill className="" />
                 </Link>
               </li>
-              )
-            }   
-            <li>
-              <Link to="/saved" className="btn btn-neutral btn-sm">
-                Saved<div className="badge">+{savedCart.length}</div>
+            )}
+            {userRole === "admin" && (
+              <li>
+                <Link to="/uses" className="">
+                  Users
+                  <FaUsers />
+                </Link>
+              </li>
+            )}
+            {userRole === "admin" && (
+              <li>
+                <Link to="/addItem" className="">
+                  Add New
+                  <IoMdAdd className="text-xl font-extrabold" />
+                </Link>
+              </li>
+            )}
+             <li>
+              <Link to="/saved" className="">
+                Saved <CiSaveDown2 className="2xl"/><div className="badge">+{savedCart.length}</div>
               </Link>
             </li>
-            {user ? (
+              {user ? (
               <>
                 <li>
                   <Link
-                    onClick={handleLogOut}
-                    className="btn btn-neutral btn-sm"
+                    onClick={handleLogOut} className=""
                   >
                     Log Out
                   </Link>
@@ -100,32 +92,17 @@ const Header = () => {
             ) : (
               <>
                 <li>
-                  <Link to="/signIn" className="btn btn-neutral btn-sm">
+                  <Link to="/signIn">
                     Log In
                   </Link>
                 </li>
               </>
             )}
-          </ul>
+            </ul>
+          </div>
         </div>
       </div>
-      {/* <div className="navbar bg-base-100 flex justify-between">
-  <div className="">
-    <p className='lg:text-2xl font-bold mx-auto' data-aos="fade-down" data-aos-delay="50" data-aos-duration="1000">Pathway Online Development</p>
-  </div>
-  <div className="flex-none">
-    <ul className="menu menu-horizontal px-1 space-x-2 space-y-2 lg:space-y-0 grid lg:flex">
-    <li><Link to="/" className='btn btn-neutral btn-sm'>Home</Link></li>
-    <li><Link to="/saved" className="btn btn-neutral btn-sm">Saved<div className="badge">+{savedCart.length}</div></Link></li>
-      {
-        user?<>
-        <li><Link onClick={handleLogOut} className='btn btn-neutral btn-sm'>Log Out</Link></li></>: <>   
-        <li><Link to="/signIn" className='btn btn-neutral btn-sm'>Log In</Link></li></>
-      }
-    </ul>
-  </div>
-</div> */}
-    </>
+    </div>
   );
 };
 

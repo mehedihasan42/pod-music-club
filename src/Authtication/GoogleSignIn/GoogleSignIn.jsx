@@ -12,9 +12,24 @@ const GoogleSignIn = () => {
   const handleGoogleSignUp =() =>{
     googleSignUp()
     .then(result=>{
-      const loggedUser = result.user;
-      console.log(loggedUser)
-      navigate(from, { replace: true });
+      const user = result.user;
+      console.log(user)
+      const saveUser = {name:user.displayName,email:user.email,photo:user.photoURL}
+      fetch('https://pod-music-server.onrender.com/api/users',{
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(saveUser)
+      })
+      .then(res=>res.json())
+      .then(data=>{
+        if(data.insertedId){
+          const loggedUser = result.user;
+          console.log(loggedUser)
+          navigate(from, { replace: true });
+        }
+      })
     })
   }
   return (

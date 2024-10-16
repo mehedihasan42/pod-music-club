@@ -9,6 +9,7 @@ import SavedCart from "../Components/SavedCart/SavedCart";
 import Admin from "../Home/Admin/Admin/Admin";
 import AddItem from "../Home/Admin/AddItem/AddItem";
 import EditPage from "../Home/Admin/EditPage/EditPage";
+import Users from "../Home/Admin/Users/Users";
 
   export const router = createBrowserRouter([
     {
@@ -38,5 +39,9 @@ import EditPage from "../Home/Admin/EditPage/EditPage";
     {
       path:"/editPage/:id",
       element:<EditPage/>
+    },
+    {
+      path:"/uses",
+      element:<Users/>
     }
   ]);
