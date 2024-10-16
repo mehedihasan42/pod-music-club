@@ -18,10 +18,15 @@ const Card = () => {
 
 
   const [infos, setInfos] = useState([]);
-  //title
+  //Album Title
   const [titleSearchQuery, setTitleSearchQuery] = useState("");
   const [titleSearchList, setTitleSearchList] = useState([]);
   const [titleSuggestions, setTitleSuggestions] = useState([]);
+
+  //track Title
+  const [trackTitleSearchQuery, settrackTitleSearchQuery] = useState("");
+  const [trackTitleSearchList, setTrackTitleSearchList] = useState([]);
+  const [trackTitleSuggestions, setTrackTitleSuggestions] = useState([]);
   //singer
   const [singerSearchQuery, setSingerSearchQuery] = useState("");
   const [singerSearchList, setSingerSearchList] = useState([]);
@@ -84,7 +89,7 @@ const Card = () => {
       });
   }, []);
   
- // Function to handle changes in the search input
+ // Function to handle changes in the album title search input
   const handleTitleSearchChange = (e) => {
     const { value } = e.target;
     setTitleSearchQuery(value);
@@ -96,7 +101,7 @@ const Card = () => {
       info.AlbumTitle.toLowerCase().includes(value.toLowerCase())
     )
     .reduce((acc, curr) => {
-      if (!acc.some(item => item.title === curr.title)) {
+      if (!acc.some(item => item.AlbumTitle === curr.AlbumTitle)) {
         acc.push(curr);
       }
       return acc;
@@ -105,6 +110,29 @@ const Card = () => {
     //   info.title.toLowerCase().includes(value.toLowerCase())
     // );
     setTitleSuggestions(filteredSuggestions);
+  };
+
+ // Function to handle changes in the album title search input
+  const handleTrackTitleSearchChange = (e) => {
+    const { value } = e.target;
+    settrackTitleSearchQuery(value);
+    if (value.trim() === "") {
+      setTrackTitleSuggestions([]);
+      return;
+    }
+    const filteredSuggestions = infos.filter((info) =>
+      info.TrackTitles.toLowerCase().includes(value.toLowerCase())
+    )
+    .reduce((acc, curr) => {
+      if (!acc.some(item => item.TrackTitles === curr.TrackTitles)) {
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
+    // const filteredSuggestions = infos.filter((info) =>
+    //   info.title.toLowerCase().includes(value.toLowerCase())
+    // );
+    setTrackTitleSuggestions(filteredSuggestions);
   };
 
   // Function to handle changes in the singer search input
@@ -265,10 +293,17 @@ const Card = () => {
 
 
 // Function to select a suggestion from the autocomplete list
-const handleTitleSuggestionClick = (title) => {
+const handleTitleSuggestionClick = (AlbumTitle) => {
   setTitleSearchQuery("");
-  setTitleSearchList([...titleSearchList, title]);
+  setTitleSearchList([...titleSearchList, AlbumTitle]);
   setTitleSuggestions([]);
+};
+
+// Function to select a suggestion from the autocomplete list
+const handleTrackTitleSuggestionClick = (TrackTitle) => {
+  settrackTitleSearchQuery("");
+  setTrackTitleSearchList([...trackTitleSearchList, TrackTitle]);
+  setTrackTitleSuggestions([]);
 };
 
 const handleSingerSuggestionClick = (singer) => {
@@ -332,8 +367,16 @@ const handleSearch = () => {
 
   if (titleSearchList.length > 0) {
     filteredData = filteredData.filter((info) =>
-      titleSearchList.some((title) =>
-        info.title.toLowerCase().includes(title.toLowerCase())
+      titleSearchList.some((AlbumTitle) =>
+        info.AlbumTitle.toLowerCase().includes(AlbumTitle.toLowerCase())
+      )
+    );
+  }
+
+  if (trackTitleSearchList.length > 0) {
+    filteredData = filteredData.filter((info) =>
+      trackTitleSearchList.some((TrackTitle) =>
+        info.TrackTitle.toLowerCase().includes(TrackTitle.toLowerCase())
       )
     );
   }
@@ -419,6 +462,13 @@ const handleRemoveTitle = (index) => {
   const updatedTitleSearchList = [...titleSearchList];
   updatedTitleSearchList.splice(index, 1);
   setTitleSearchList(updatedTitleSearchList);
+};
+
+// Function to remove a search item from the list
+const handleRemoveTrackTitle = (index) => {
+  const updatedTrackTitleSearchList = [...trackTitleSearchList];
+  updatedTrackTitleSearchList.splice(index, 1);
+  setTrackTitleSearchList(updatedTrackTitleSearchList);
 };
 
 const handleRemoveSinger = (index) => {
@@ -579,11 +629,11 @@ const handlePreviousPage = () => {
   return (
     <div className="">
       <div className="grid lg:grid-cols-3 my-4 space-y-2 mt-12">
-        {/* ---title--- */}
+        {/* ---albam title--- */}
         <div className="relative">
           <input
             type="text"
-            placeholder="Title"
+            placeholder="Album Title"
             value={titleSearchQuery}
             className="input input-bordered input-sm w-full max-w-xs"
             onChange={handleTitleSearchChange}
@@ -593,22 +643,59 @@ const handlePreviousPage = () => {
               <div
                 key={index}
                 className="cursor-pointer p-2 hover:bg-gray-100"
-                onClick={() => handleTitleSuggestionClick(suggestion.title)}
+                onClick={() => handleTitleSuggestionClick(suggestion.AlbumTitle)}
               >
-                {suggestion.title}
+                {suggestion.AlbumTitle}
               </div>
             ))}
           </div>
           <div className="top-0 right-0 m-0">
-            {titleSearchList.map((title, index) => (
+            {titleSearchList.map((AlbumTitle, index) => (
               <div
                 key={index}
                 className="inline-block bg-gray-300 px-2 py-1 mt-1 mr-1"
               >
-                {title}
+                {AlbumTitle}
                 <button
                   className="ml-2 text-red-600"
                   onClick={() => handleRemoveTitle(index)}
+                >
+                  x
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* ---track title--- */}
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Track Title"
+            value={trackTitleSearchQuery}
+            className="input input-bordered input-sm w-full max-w-xs"
+            onChange={handleTrackTitleSearchChange}
+          />
+          <div  className="absolute top-10 z-10 left-0 w-full bg-base-300 text-black rounded-b-lg shadow-md max-h-80 overflow-y-auto">
+            {trackTitleSuggestions.map((suggestion, index) => (
+              <div
+                key={index}
+                className="cursor-pointer p-2 hover:bg-gray-100"
+                onClick={() => handleTrackTitleSuggestionClick(suggestion.TrackTitles)}
+              >
+                {suggestion.TrackTitles}
+              </div>
+            ))}
+          </div>
+          <div className="top-0 right-0 m-0">
+            {trackTitleSearchList.map((TrackTitle, index) => (
+              <div
+                key={index}
+                className="inline-block bg-gray-300 px-2 py-1 mt-1 mr-1"
+              >
+                {TrackTitle}
+                <button
+                  className="ml-2 text-red-600"
+                  onClick={() => handleRemoveTrackTitle(index)}
                 >
                   x
                 </button>
