@@ -49,9 +49,9 @@ const Users = () => {
   }
 
   return (
-    <div>
+    <div className="users">
         <Header/>
-      <table className="table w-full">
+      <table className="table w-full mt-8">
         <thead>
           <tr>
             <th>Email</th>
@@ -63,8 +63,9 @@ const Users = () => {
                 userData.map((user)=>(
                     <tr>
                         <td>{user.email}</td>
-                        {user.role ==='admin'?"Admin":<button onClick={()=>makeAdmin(user._id)} className="btn btn-neutral btn-sm">Admin</button>}   
-                        <td><button className="btn btn-neutral btn-sm" onClick={()=>deleteUser(user._id)}>Delete</button></td>                
+                        {user.role ==='admin'?"Admin":<button onClick={()=>makeAdmin(user._id)} className="btn btn-neutral hover:bg-white hover:text-black btn-sm">Admin</button>}   
+                        <td><button className="btn btn-neutral hover:bg-white hover:text-black btn-sm">Approve</button></td>    
+                        <td><button className="btn btn-neutral hover:bg-white hover:text-black btn-sm" onClick={()=>deleteUser(user._id)}>Delete</button></td>                
                     </tr>
                 ))
             }

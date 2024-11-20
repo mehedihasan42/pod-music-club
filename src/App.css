@@ -1,9 +1,11 @@
-#root {
+/* #root {
   max-width: 1280px;
-  margin: 0 auto;
+  margin: 0 0;
   padding: 2rem;
   text-align: center;
-}
+} */
+
+
 
 .logo {
   height: 6em;
@@ -34,9 +36,25 @@
 }
 
 .card {
-  padding: 2em;
+  max-width: 1280px;
+  margin: 0 0;
+  padding: 2rem;
+  text-align: center;
 }
 
 .read-the-docs {
   color: #888;
 }
+
+.addItem,.admin,.saved,.users{
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+ /* .admin{
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+ } */

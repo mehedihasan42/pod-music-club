@@ -58,7 +58,7 @@ const SignIn = () => {
                   type="email"
                   {...register("email", { required: true })}
                   placeholder="email"
-                  className="input input-bordered"
+                  className="input input-bordered rounded-md"
                 />
                 {errors.email && (
                   <span className="text-red-500">Email is required</span>
@@ -69,14 +69,14 @@ const SignIn = () => {
                   type="password"
                   {...register("password", { required: true })}
                   placeholder="password"
-                  className="input input-bordered"
+                  className="input input-bordered rounded-md"
                 />
                 {errors.password?.type === "required" && (
                   <span className="text-red-500">Password is required</span>
                 )}
               </div>
               <div className="form-control">
-                <button type="submit" className="btn btn-neutral">
+                <button type="submit" className="btn btn-neutral rounded-md hover:bg-white hover:text-black">
                   Log in
                 </button>
               </div>

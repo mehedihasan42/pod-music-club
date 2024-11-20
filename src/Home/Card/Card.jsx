@@ -5,7 +5,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import useCart from "../../useHooks/useCart";
 import { FaArrowCircleRight,FaArrowCircleLeft } from "react-icons/fa";
 import useAdmin from "../../useHooks/useAdmin";
-import useMusics from "../../useHooks/useMusics";
 
 
 const Card = () => {
@@ -14,7 +13,6 @@ const Card = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const userRole = useAdmin()
-  // const data = useMusics()
 
 
   const [infos, setInfos] = useState([]);
@@ -112,7 +110,7 @@ const Card = () => {
     setTitleSuggestions(filteredSuggestions);
   };
 
- // Function to handle changes in the album title search input
+ // Function to handle changes in the track title search input
   const handleTrackTitleSearchChange = (e) => {
     const { value } = e.target;
     settrackTitleSearchQuery(value);
@@ -147,7 +145,7 @@ const Card = () => {
       info.Singer.toLowerCase().includes(value.toLowerCase())
     )
     .reduce((acc, curr) => {
-      if (!acc.some(item => item.singer === curr.singer)) {
+      if (!acc.some(item => item.Singer === curr.Singer)) {
         acc.push(curr);
       }
       return acc;
@@ -155,7 +153,7 @@ const Card = () => {
     setSingerSuggestions(filteredSuggestions);
   };
 
-  // Function to handle changes in the singer search input
+  // Function to handle changes in the Lyricist search input
   const handleLyricistSearchChange = (e) => {
     const { value } = e.target;
     setlyricistSearchQuery(value);
@@ -164,10 +162,10 @@ const Card = () => {
       return;
     }
     const filteredSuggestions = infos.filter((info) =>
-      info.lyricist.toLowerCase().includes(value.toLowerCase())
+      info.Lyricist.toLowerCase().includes(value.toLowerCase())
     )
     .reduce((acc, curr) => {
-      if (!acc.some(item => item.lyricist === curr.lyricist)) {
+      if (!acc.some(item => item.Lyricist === curr.Lyricist)) {
         acc.push(curr);
       }
       return acc;
@@ -187,10 +185,10 @@ const Card = () => {
       return;
     }
     const filteredSuggestions = infos.filter((info) =>
-      info.composer.toLowerCase().includes(value.toLowerCase())
+      info.Composers.toLowerCase().includes(value.toLowerCase())
     )
     .reduce((acc, curr) => {
-      if (!acc.some(item => item.composer === curr.composer)) {
+      if (!acc.some(item => item.Composers === curr.Composers)) {
         acc.push(curr);
       }
       return acc;
@@ -209,10 +207,10 @@ const Card = () => {
       return;
     }
     const filteredSuggestions = infos.filter((info) =>
-      info.label.toLowerCase().includes(value.toLowerCase())
+      info.Label.toLowerCase().includes(value.toLowerCase())
     )
     .reduce((acc, curr) => {
-      if (!acc.some(item => item.label === curr.label)) {
+      if (!acc.some(item => item.Label === curr.Label)) {
         acc.push(curr);
       }
       return acc;
@@ -300,33 +298,33 @@ const handleTitleSuggestionClick = (AlbumTitle) => {
 };
 
 // Function to select a suggestion from the autocomplete list
-const handleTrackTitleSuggestionClick = (TrackTitle) => {
+const handleTrackTitleSuggestionClick = (TrackTitles) => {
   settrackTitleSearchQuery("");
-  setTrackTitleSearchList([...trackTitleSearchList, TrackTitle]);
+  setTrackTitleSearchList([...trackTitleSearchList, TrackTitles]);
   setTrackTitleSuggestions([]);
 };
 
-const handleSingerSuggestionClick = (singer) => {
+const handleSingerSuggestionClick = (Singer) => {
   setSingerSearchQuery("");
-  setSingerSearchList([...singerSearchList, singer]);
+  setSingerSearchList([...singerSearchList, Singer]);
   setSingerSuggestions([]);
 };
 
-const handleLyricistSuggestionClick = (lyricist) => {
+const handleLyricistSuggestionClick = (Lyricist) => {
   setSingerSearchQuery("");
-  setLyricistSearchList([...lyricistSearchList, lyricist]);
+  setLyricistSearchList([...lyricistSearchList, Lyricist]);
   setLyricistSuggestions([]);
 };
 
-const handleComposerSuggestionClick = (composer) => {
+const handleComposerSuggestionClick = (Composers) => {
   setComposerSearchQuery("");
-  setComposerSearchList([...composerSearchList, composer]);
+  setComposerSearchList([...composerSearchList, Composers]);
   setComposerSuggestions([]);
 };
 
-const handleLabelSuggestionClick = (label) => {
+const handleLabelSuggestionClick = (Label) => {
   setLabelSearchQuery("");
-  setLabelSearchList([...labelSearchList, label]);
+  setLabelSearchList([...labelSearchList, Label]);
   setLabelSuggestions([]);
 };
 
@@ -375,40 +373,40 @@ const handleSearch = () => {
 
   if (trackTitleSearchList.length > 0) {
     filteredData = filteredData.filter((info) =>
-      trackTitleSearchList.some((TrackTitle) =>
-        info.TrackTitle.toLowerCase().includes(TrackTitle.toLowerCase())
+      trackTitleSearchList.some((TrackTitles) =>
+        info.TrackTitles.toLowerCase().includes(TrackTitles.toLowerCase())
       )
     );
   }
 
   if (singerSearchList.length > 0) {
     filteredData = filteredData.filter((info) =>
-      singerSearchList.some((singer) =>
-        info.singer.toLowerCase().includes(singer.toLowerCase())
+      singerSearchList.some((Singer) =>
+        info.Singer.toLowerCase().includes(Singer.toLowerCase())
       )
     );
   }
 
   if (lyricistSearchList.length > 0) {
     filteredData = filteredData.filter((info) =>
-      lyricistSearchList.some((lyricist) =>
-        info.lyricist.toLowerCase().includes(lyricist.toLowerCase())
+      lyricistSearchList.some((Lyricist) =>
+        info.Lyricist.toLowerCase().includes(Lyricist.toLowerCase())
       )
     );
   }
 
   if (composerSearchList.length > 0) {
     filteredData = filteredData.filter((info) =>
-      composerSearchList.some((composer) =>
-        info.composer.toLowerCase().includes(composer.toLowerCase())
+      composerSearchList.some((Composers) =>
+        info.Composers.toLowerCase().includes(Composers.toLowerCase())
       )
     );
   }
 
   if (labelSearchList.length > 0) {
     filteredData = filteredData.filter((info) =>
-      labelSearchList.some((label) =>
-        info.label.toLowerCase().includes(label.toLowerCase())
+      labelSearchList.some((Label) =>
+        info.Label.toLowerCase().includes(Label.toLowerCase())
       )
     );
   }
@@ -529,11 +527,13 @@ const handleRemovePyear = (index) => {
   /*----handleSaveItem----*/
   const handleSaveItem = async (item) => {
     const data = {
-      title: item.title,
-      composer: item.composer,
-      label: item.label,
-      lyricist: item.lyricist,
-      singer: item.singer,
+      title: item.AlbumTitle,
+      track:item.TrackTitles,
+      composer: item.Composers,
+      label: item.Label,
+      lyricist: item.Lyricist,
+      singer: item.Singer,
+      pYear:item.Pyear,
       email: user?.email,
     }
     
@@ -627,7 +627,7 @@ const handlePreviousPage = () => {
 
 
   return (
-    <div className="">
+    <div className="card max-w-screen-2xl mx-auto">
       <div className="grid lg:grid-cols-3 my-4 space-y-2 mt-12">
         {/* ---albam title--- */}
         <div className="relative">
@@ -635,7 +635,7 @@ const handlePreviousPage = () => {
             type="text"
             placeholder="Album Title"
             value={titleSearchQuery}
-            className="input input-bordered input-sm w-full max-w-xs"
+            className="input input-bordered input-sm w-full max-w-xs mt-2"
             onChange={handleTitleSearchChange}
           />
           <div  className="absolute top-10 z-10 left-0 w-full bg-base-300 text-black rounded-b-lg shadow-md max-h-80 overflow-y-auto">
@@ -744,9 +744,9 @@ const handlePreviousPage = () => {
               <div
                 key={index}
                 className="cursor-pointer p-2 hover:bg-gray-100"
-                onClick={() => handleSingerSuggestionClick(suggestion.singer)}
+                onClick={() => handleSingerSuggestionClick(suggestion.Singer)}
               >
-                {suggestion.singer}
+                {suggestion.Singer}
               </div>
             ))}
           </div>
@@ -782,9 +782,9 @@ const handlePreviousPage = () => {
               <div
                 key={index}
                 className="cursor-pointer p-2 hover:bg-gray-100"
-                onClick={() => handleLyricistSuggestionClick(suggestion.lyricist)}
+                onClick={() => handleLyricistSuggestionClick(suggestion.Lyricist)}
               >
-                {suggestion.lyricist}
+                {suggestion.Lyricist}
               </div>
             ))}
           </div>
@@ -819,19 +819,19 @@ const handlePreviousPage = () => {
               <div
                 key={index}
                 className="cursor-pointer p-2 hover:bg-gray-100"
-                onClick={() => handleComposerSuggestionClick(suggestion.composer)}
+                onClick={() => handleComposerSuggestionClick(suggestion.Composers)}
               >
-                {suggestion.composer}
+                {suggestion.Composers}
               </div>
             ))}
           </div>
           <div className="top-0 right-0 m-0">
-            {composerSearchList.map((composer, index) => (
+            {composerSearchList.map((Composers, index) => (
               <div
                 key={index}
                 className="inline-block bg-gray-300 px-2 py-1 mt-1 mr-1"
               >
-                {composer}
+                {Composers}
                 <button
                   className="ml-2 text-red-600"
                   onClick={() => handleRemoveComposer(index)}
@@ -857,19 +857,19 @@ const handlePreviousPage = () => {
               <div
                 key={index}
                 className="cursor-pointer p-2 hover:bg-gray-100"
-                onClick={() => handleLabelSuggestionClick(suggestion.label)}
+                onClick={() => handleLabelSuggestionClick(suggestion.Label)}
               >
-                {suggestion.label}
+                {suggestion.Label}
               </div>
             ))}
           </div>
           <div className="top-0 right-0 m-0">
-            {labelSearchList.map((label, index) => (
+            {labelSearchList.map((Label, index) => (
               <div
                 key={index}
                 className="inline-block bg-gray-300 px-2 py-1 mt-1 mr-1"
               >
-                {label}
+                {Label}
                 <button
                   className="ml-2 text-red-600"
                   onClick={() => handleRemoveLabel(index)}
@@ -881,7 +881,7 @@ const handlePreviousPage = () => {
           </div>
         </div>
         {/* -----Distributor------ */}
-        <div className="relative">
+        {/* <div className="relative">
           <input
             type="text"
             placeholder="Distributor"
@@ -916,7 +916,7 @@ const handlePreviousPage = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
         {/* ------ISRC-------- */}
         <div className="relative">
           <input
@@ -1065,13 +1065,13 @@ const handlePreviousPage = () => {
             ))}
           </div>
         </div>
-        <button className="btn btn-neutral btn-sm ml-10 w-80" onClick={handleSearch}>
+        <button className="btn btn-neutral hover:bg-white hover:text-black btn-sm ml-20 w-80" onClick={handleSearch}>
           Search
         </button>
       </div>
      
   <table className="table">
-    <thead className="sticky top-16 bg-white">
+    <thead className="sticky top-16 bg-white dark:bg-gray-900">
       <tr>
         <th ></th> {/* Adjust width for index column */}
         <th className="w-44">  Album Title  </th>
@@ -1118,19 +1118,19 @@ const handlePreviousPage = () => {
           <td >
             <button
               onClick={() => handleSaveItem(info)}
-              className="btn btn-neutral btn-sm"
+              className="btn btn-neutral hover:bg-white hover:text-black btn-sm"
             >
               Save
             </button>
           </td>
           {userRole === "admin" && (
             <td >
-              <Link to={`/editPage/${info._id}`} className="btn btn-neutral btn-sm">Edit</Link>
+              <Link to={`/editPage/${info._id}`} className="btn btn-neutral hover:bg-white hover:text-black btn-sm">Edit</Link>
             </td>
           )}
           {userRole === "admin" && (
             <td >
-              <button onClick={()=>handleDeleteItem(info._id)} className="btn btn-neutral btn-sm">Delete</button>
+              <button onClick={()=>handleDeleteItem(info._id)} className="btn btn-neutral hover:bg-white hover:text-black btn-sm">Delete</button>
             </td>
           )}
         </tr>

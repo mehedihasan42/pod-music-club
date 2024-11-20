@@ -34,7 +34,7 @@ const SignUp = () => {
         if(data.insertedId){
           const loggedUser = result.user;
           console.log(loggedUser)
-          navigate(from, { replace: true });
+          navigate("/waiting");
         }
       })
     })
@@ -52,7 +52,7 @@ const SignUp = () => {
                   type="email"
                   {...register("email", { required: true })}
                   placeholder="email"
-                  className="input input-bordered"
+                  className="input input-bordered rounded-md"
                 />
                 {errors.email && (
                   <span className="text-red-500">This field is required</span>
@@ -63,7 +63,7 @@ const SignUp = () => {
                   type="password"
                   {...register("password", { required: true, minLength: 6 })}
                   placeholder="password"
-                  className="input input-bordered"
+                  className="input input-bordered rounded-md"
                 />
                 {errors.password?.type === "required" && (
                   <span className="text-red-500">Password is required</span>
@@ -75,7 +75,7 @@ const SignUp = () => {
                 )}
               </div>
               <div className="form-control">
-                <button type="submit" className="btn btn-neutral">
+                <button type="submit" className="btn rounded-md btn-neutral hover:bg-white hover:text-black">
                   Sign Up
                 </button>
               </div>

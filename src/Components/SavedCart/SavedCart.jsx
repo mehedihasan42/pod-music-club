@@ -46,7 +46,7 @@ const SavedCart = () => {
     
 
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto mt-10 saved">
             <Header/>
         <table className="table w-full">
           <thead>
@@ -69,19 +69,24 @@ const SavedCart = () => {
               <tr key={index}>
                 <th>{index + 1}</th>
                 <td>{saved.title}</td>
+                <td>{saved.track}</td>
                 <td>{saved.singer}</td>
                 <td>{saved.lyricist}</td>
-                <td>{saved.composer}</td>
+                <td>{saved.composers}</td>
                 <td>{saved.label}</td>
-                <td>{saved.Distributor}</td>
-                <td>{saved.ISRC}</td>
+                <td>{saved.PUB}</td>
                 <td>{saved.UPC}</td>
-                <td>{saved.CopR}</td>
+                <td>{saved.ISRC}</td>
+                <td>{saved.CopRNo}</td>
+                <td>{saved.Royalty}</td>
                 <td>{saved.pYear}</td>
+                <td>{saved.Date}</td>
+                <td>{saved.FBDate}</td>
+                <td>{saved.Remarks}</td>
                 <td>
                   <button
                     onClick={() => handleDeleteItem(saved)}
-                    className="btn btn-neutral btn-sm"
+                    className="btn btn-neutral hover:bg-white hover:text-black btn-sm"
                   >
                     Delete
                   </button>

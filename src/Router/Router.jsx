@@ -10,11 +10,13 @@ import Admin from "../Home/Admin/Admin/Admin";
 import AddItem from "../Home/Admin/AddItem/AddItem";
 import EditPage from "../Home/Admin/EditPage/EditPage";
 import Users from "../Home/Admin/Users/Users";
+import Waiting from "../Components/Waiting/Waiting";
+import AdminRouter from "./AdminRouter";
 
   export const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home/>,
+      element: <PrivateRouter><Home/></PrivateRouter>,
     },
     {
       path:"/signup",
@@ -30,18 +32,22 @@ import Users from "../Home/Admin/Users/Users";
     },
     {
       path:"/Admin",
-      element:<Admin/>
+      element:<AdminRouter><Admin/></AdminRouter>
     },
     {
       path:"/addItem",
-      element:<AddItem/>
+      element:<AdminRouter><AddItem/></AdminRouter>
     },
     {
       path:"/editPage/:id",
-      element:<EditPage/>
+      element:<AdminRouter><EditPage/></AdminRouter>
     },
     {
       path:"/uses",
-      element:<Users/>
+      element:<AdminRouter><Users/></AdminRouter>
+    },
+    {
+      path:"/waiting",
+      element:<Waiting/>
     }
   ]);

@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm } from "react-hook-form"
 import Header from '../../Header/Header';
 import Swal from 'sweetalert2';
+import "./AddItem.css"
 
 const AddItem = () => {
     const { register, handleSubmit,reset} = useForm()
@@ -30,10 +31,10 @@ const AddItem = () => {
 
 
     return (
-       <>
+       <div className='addItem mt-10 max-w-6xl mx-auto'>
        <Header/>
-        <h2 className='text-xl font-bold'>Add New Collection</h2>
-        <form onSubmit={handleSubmit(onSubmit)} className='bg-base-200 p-6 mx-auto'>
+        <h2 className='text-xl font-bold text-center'>Add New Collection</h2>
+        <form onSubmit={handleSubmit(onSubmit)} className='bg-base-200 p-6 max-w-4xl mx-auto'>
         {/* register your input into the hook by invoking the "register" function */}
         {/* <input defaultValue="test" {...register("example")} /> */}
   
@@ -41,7 +42,7 @@ const AddItem = () => {
         {/* <input {...register("exampleRequired", { required: true })} />
         */}
 
-      <div className='grid grid-cols-2 space-y-2'>
+      <div className='grid grid-cols-2 gap-4'>
       <input
   type="text"
   placeholder="Title"
@@ -103,9 +104,9 @@ const AddItem = () => {
   {...register("Link")}
   className="input input-bordered input-md w-full max-w-xs" />
       </div>
-        <input type="submit" className='btn btn-wide btn-neutral mt-6'/>
+      <input type="submit" className='btn btn-neutral hover:bg-white hover:text-black btn-wide mt-6 mx-auto block'/>
       </form>
-       </>
+       </div>
     );
 };
 

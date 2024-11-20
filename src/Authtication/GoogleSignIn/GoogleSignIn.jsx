@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { FcGoogle } from 'react-icons/fc';
 import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const GoogleSignIn = () => {
   const { googleSignUp } = useContext(AuthContext);
@@ -24,10 +25,26 @@ const GoogleSignIn = () => {
       })
       .then(res=>res.json())
       .then(data=>{
+        navigate("/");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        Toast.fire({
+          icon: 'success',
+          title: 'Loged in successfully'
+        })
         if(data.insertedId){
           const loggedUser = result.user;
           console.log(loggedUser)
-          navigate(from, { replace: true });
+          
         }
       })
     })
