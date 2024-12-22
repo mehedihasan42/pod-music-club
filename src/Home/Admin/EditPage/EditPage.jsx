@@ -24,12 +24,28 @@ const EditPage = () => {
   }, [currentData, reset]);
   
     const onSubmit = async(data) => {
-      const res = await fetch(`https://pod-music-server.onrender.com/api/music/${id.id}`,{
+      const res = await fetch(`https://pod-music-server.onrender.com/api/music/${data._id}`,{
         method:"PUT",
         headers:{
           'Content-Type': 'application/json'
         },
-        body:JSON.stringify({title:data.title,singer:data.singer,lyricist:data.lyricist,composer:data.composer,label:data.label,Distributor:data.Distributor,ISRC:data.ISRC,UPC:data.UPC,CopR:data.CopR,Year:data.Year,Link:data.Link})
+        body:JSON.stringify({
+          AlbumTitle:data.AlbumTitle,
+          TrackTitles:data.TrackTitles,
+          Singer:data.Singer,
+          Lyricist:data.Lyricist,
+          Composers:data.Composers,
+          Label:data.Label,
+          PUB:data.PUB,
+          UPC:data.UPC,
+          ISRC:data.ISRC,
+          CopRNo:data.CopRNo,
+          Royalty:data.Royalty,
+          Pyear:data.Pyear,
+          Date:data.Date,
+          FBDate:data.FBDate,
+          Remark:data.Remark,
+        })
       })
       const result = res.json();
       if(result){
@@ -47,9 +63,9 @@ const EditPage = () => {
     return (
         <>
        <Header/>
-       <h2 className='text-xl font-bold'>Edit Data Here</h2>
+       <h2 className='text-xl font-bold mt-16'>Edit Data Here</h2>
         <form className='bg-base-200 p-6 mx-auto' onSubmit={handleSubmit(onSubmit)}>
-      <div className='grid grid-cols-2 space-y-2'>
+      <div className='grid grid-cols-4 space-y-2'>
         {/* AlbumTitle */}
       <div className="form-control">
           <label className="label">
@@ -66,47 +82,31 @@ const EditPage = () => {
           <input type="text" defaultValue={currentData?.TrackTitles} {...register("TrackTitles")} 
           className="input input-bordered input-md w-full max-w-xs" />
         </div>
-        {/*  Bangla*/}
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Bangla</span>
-          </label>
-          <input type="text" defaultValue={currentData?.singer}   {...register("bangla")} 
-          className="input input-bordered input-md w-full max-w-xs" />
-        </div>
-        {/* singer */}
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Singer</span>
-          </label>
-          <input type="text" defaultValue={currentData?.Singer}  {...register("Singer")} 
-          className="input input-bordered input-md w-full max-w-xs" />
-        </div>
-        {/* lyricist */}
+        {/* Lyricist */}
         <div className="form-control">
           <label className="label">
             <span className="label-text">Lyricist</span>
           </label>
-          <input type="text" defaultValue={currentData?.Lyricist}    {...register("Lyricist")} 
+          <input type="text" defaultValue={currentData?.Lyricist}  {...register("Lyricist")} 
           className="input input-bordered input-md w-full max-w-xs" />
         </div>
-        {/* composer */}
+        {/* Composers */}
         <div className="form-control">
           <label className="label">
-            <span className="label-text">Composer</span>
+            <span className="label-text">Composers</span>
           </label>
-          <input type="text" defaultValue={currentData?.Composer}  {...register("Composer")} 
+          <input type="text" defaultValue={currentData?.Composers}    {...register("Composers")} 
           className="input input-bordered input-md w-full max-w-xs" />
         </div>
-        {/* label */}
+        {/* Label */}
         <div className="form-control">
           <label className="label">
             <span className="label-text">Label</span>
           </label>
-          <input type="text" defaultValue={currentData?.Label}   {...register("Label")} 
+          <input type="text" defaultValue={currentData?.Label}  {...register("Label")} 
           className="input input-bordered input-md w-full max-w-xs" />
         </div>
-        {/* label */}
+        {/* PUB */}
         <div className="form-control">
           <label className="label">
             <span className="label-text">PUB</span>
@@ -114,7 +114,7 @@ const EditPage = () => {
           <input type="text" defaultValue={currentData?.PUB}   {...register("PUB")} 
           className="input input-bordered input-md w-full max-w-xs" />
         </div>
-        {/* label */}
+        {/* UPC */}
         <div className="form-control">
           <label className="label">
             <span className="label-text">UPC</span>
@@ -122,7 +122,7 @@ const EditPage = () => {
           <input type="text" defaultValue={currentData?.UPC}   {...register("UPC")} 
           className="input input-bordered input-md w-full max-w-xs" />
         </div>
-        {/* label */}
+        {/* ISRC */}
         <div className="form-control">
           <label className="label">
             <span className="label-text">ISRC</span>
@@ -130,7 +130,7 @@ const EditPage = () => {
           <input type="text" defaultValue={currentData?.ISRC}   {...register("ISRC")} 
           className="input input-bordered input-md w-full max-w-xs" />
         </div>
-        {/* label */}
+        {/* CopRNo */}
         <div className="form-control">
           <label className="label">
             <span className="label-text">CopR No</span>
@@ -138,7 +138,7 @@ const EditPage = () => {
           <input type="text" defaultValue={currentData?.CopRNo}   {...register("CopRNo")} 
           className="input input-bordered input-md w-full max-w-xs" />
         </div>
-        {/* label */}
+        {/* Royalty */}
         <div className="form-control">
           <label className="label">
             <span className="label-text">Royalty</span>
@@ -146,7 +146,7 @@ const EditPage = () => {
           <input type="text" defaultValue={currentData?.Royalty}   {...register("Royalty")} 
           className="input input-bordered input-md w-full max-w-xs" />
         </div>
-        {/* label */}
+        {/* Pyear */}
         <div className="form-control">
           <label className="label">
             <span className="label-text">Pyear</span>
@@ -154,7 +154,7 @@ const EditPage = () => {
           <input type="text" defaultValue={currentData?.Pyear}   {...register("Pyear")} 
           className="input input-bordered input-md w-full max-w-xs" />
         </div>
-        {/* label */}
+        {/* Date */}
         <div className="form-control">
           <label className="label">
             <span className="label-text">Date</span>
@@ -162,7 +162,7 @@ const EditPage = () => {
           <input type="text" defaultValue={currentData?.Date}   {...register("Date")} 
           className="input input-bordered input-md w-full max-w-xs" />
         </div>
-        {/* label */}
+        {/* FBDate */}
         <div className="form-control">
           <label className="label">
             <span className="label-text">FB Date</span>
@@ -170,7 +170,7 @@ const EditPage = () => {
           <input type="text" defaultValue={currentData?.FBDate}   {...register("FBDate")} 
           className="input input-bordered input-md w-full max-w-xs" />
         </div>
-        {/* label */}
+        {/* Remarks */}
         <div className="form-control">
           <label className="label">
             <span className="label-text">Remarks</span>
@@ -187,7 +187,7 @@ const EditPage = () => {
           className="input input-bordered input-md w-full max-w-xs" />
         </div> 
       </div>
-        <input type="submit" className='btn btn-wide btn-neutral mt-6'/>
+        <input type="submit" className='btn btn-neutral hover:bg-white hover:text-black btn-wide mt-6 mx-auto block'/>
       </form>
        </>
     );
