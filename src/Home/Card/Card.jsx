@@ -52,6 +52,14 @@ const Card = () => {
       });
   }, []);
 
+  const handleClickLink = (link)=>{
+     if (link.startsWith("http") || link.startsWith("www")) {
+      window.open(link, "_blank", "noopener,noreferrer");
+    }else {
+      navigate(link);
+    }
+  }
+
   // Function to handle changes in the track title search input
   const handleTitleSelection = (selectedOptions) => {
     const selectedValues = selectedOptions
@@ -452,7 +460,7 @@ const Card = () => {
   return (
     <div className="">
       <div className="card overflow-auto w-11/12 mx-auto h-screen">
-        <div className="grid lg:grid-cols-4 my-4 space-y-2 space-x-2 mt-12 mx-auto">
+        <div className="grid lg:grid-cols-4 my-4 space-y-2 space-x-2 mt-20 mx-auto">
           {/* ---albam title--- */}
           <div className="relative mt-2 ml-2">
             <Select
@@ -624,7 +632,7 @@ const Card = () => {
           <thead className="sticky top-8 bg-white dark:bg-gray-900">
             <tr>
               <th></th> {/* Adjust width for index column */}
-              <th className="w-44"> Album Title </th>
+              <th> Album Title </th>
               <th>Track Titles</th>
               <th>Singer</th>
               <th>Lyricist</th>
@@ -661,50 +669,57 @@ const Card = () => {
                 <td className="w-11 whitespace-nowrap">{info.PUB}</td>
                 <td></td>
                 <td className="w-11 whitespace-nowrap">{info.Remarks}</td>
-                <td></td>
+                <td className="btn btn-link" onClick={()=>handleClickLink(info.link)}>Link</td>
                 <td className="w-11 whitespace-nowrap">{info.Royalty}</td>
                 <td className="w-11 whitespace-nowrap">{info.Date}</td>
                 <td className="w-11 whitespace-nowrap">{info.FBDate}</td>
                 {/* <td ><FaYoutube className="text-3xl text-red-600 cursor-pointer"/></td> */}
-                <td>
-                <div className="dropdown">
-  <summary tabIndex={0} role="button" className="btn btn-circle btn-xs m-1"><BsThreeDotsVertical className="text-2xl"/></summary>
-  <ul tabIndex={0} className="menu dropdown-content bg-base-100 z-[1] space-y-0.5 p-2 shadow">
-  <li>
-                        <button
-                          onClick={() => handleSaveItem(info)}
+                <td className="dropdown my-0 py-0">
+                  <summary
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-circle btn-xs m-1"
+                  >
+                    <BsThreeDotsVertical className="text-2xl" />
+                  </summary>
+                  <ul
+                    tabIndex={0}
+                    className="menu dropdown-content bg-base-100 z-[1] space-y-0.5 p-2 shadow"
+                  >
+                    <li>
+                      <button
+                        onClick={() => handleSaveItem(info)}
+                        className="btn btn-neutral hover:bg-white hover:text-black btn-xs"
+                      >
+                        Save
+                      </button>
+                    </li>
+                    {userRole === "admin" && (
+                      <li>
+                        <Link
+                          to={`/editPage/${info._id}`}
                           className="btn btn-neutral hover:bg-white hover:text-black btn-xs"
                         >
-                          Save
+                          Edit
+                        </Link>
+                      </li>
+                    )}
+                    {userRole === "admin" && (
+                      <li>
+                        <button
+                          onClick={() => handleDeleteItem(info._id)}
+                          className="btn btn-neutral hover:bg-white hover:text-black btn-xs"
+                        >
+                          Delete
                         </button>
                       </li>
-                      {userRole === "admin" && (
-                        <li>
-                          <Link
-                            to={`/editPage/${info._id}`}
-                            className="btn btn-neutral hover:bg-white hover:text-black btn-xs"
-                          >
-                            Edit
-                          </Link>
-                        </li>
-                      )}
-                      {userRole === "admin" && (
-                        <li>
-                          <button
-                            onClick={() => handleDeleteItem(info._id)}
-                            className="btn btn-neutral hover:bg-white hover:text-black btn-xs"
-                          >
-                            Delete
-                          </button>
-                        </li>
-                      )}
-  </ul>
-</div>
+                    )}
+                  </ul>
                 </td>
               </tr>
             ))}
           </tbody>
-          <div className="overflow-x-scroll max-w-screen-lg mx-auto"></div>
+          {/* <div className="overflow-x-scroll max-w-screen-lg mx-auto"></div> */}
         </table>
       </div>
       <div className="flex justify-center my-2 space-x-4 mt-4 fixed bottom-4 left-1/2 transform -translate-x-1/2 z-10 bg-white dark:bg-gray-900">
